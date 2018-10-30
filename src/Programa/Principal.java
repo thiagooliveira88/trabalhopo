@@ -12,8 +12,8 @@ public class Principal {
 		Promissoria[] p = SuporteArquivo.leArquivo(path, 30000);
 
 		// teste imprimindo resultado
-		 for (int i = 0; i < p.length; i++) {
-			 System.out.println(p[i].toString());	
+		for (int i = 0; i < p.length; i++) {
+			System.out.println(p[i].toString());
 		}
 	}
 

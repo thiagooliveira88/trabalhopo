@@ -53,10 +53,10 @@ public class Promissoria {
 	
 	@Override
 	public String toString() {
-		return "\nData Vencimento=" + dataVenc 
-				+ ", Nome=" + nome 
-				+ ", CPF=" + cpf 
-				+ ", Valor=" + valor
-				+ ", Paga=" + paga;
+		return "\nData Vencimento = " + dataVenc 
+				+ ", Nome = " + nome 
+				+ ", CPF = " + cpf 
+				+ ", Valor = " + valor
+				+ ", Paga = " + paga;
 	}
 }

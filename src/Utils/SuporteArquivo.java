@@ -11,7 +11,7 @@ public class SuporteArquivo {
 		File f = new File(arq);
 		// criar um objeto de varredura do arquivo
 		Scanner sc = null;
-		// criar uma lista para os municípios
+		// criar uma lista para as promissorias
 		Promissoria[] promissorias = new Promissoria[tamanhoVet];
 		// lê arquivo
 		try {
