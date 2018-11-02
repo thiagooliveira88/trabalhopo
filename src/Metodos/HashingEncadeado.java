@@ -83,7 +83,7 @@ public class HashingEncadeado {
 			if (this.vetorH[pos].getPrim()!=null){
 				aux = this.vetorH[pos].getPrim();
 				while (aux != null){
-					if (aux.getInfo().compareTo(placas)==0)
+					if (aux.getInfo().compareTo(data)==0)
 						str += aux.getInfo().toString()+"\n";
 					aux = aux.getProx();
 				}
