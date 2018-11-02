@@ -1,8 +1,9 @@
 package Programa;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import Metodos.Heapsort;
+import Metodos.QuickSort;
 import Metodos.UsoGeral;
 import Objetos.Promissoria;
 import Utils.SuporteArquivo;
@@ -16,24 +17,25 @@ public class Principal {
 		// crio um LinkedHashMap com o nome do arquivo a ser lido e com o tamanho do
 		// vetor.
 		LinkedHashMap<String, Integer> nomeArqs = new LinkedHashMap<String, Integer>();
-		nomeArqs.put("promissoria500alea.txt", 500);
-		nomeArqs.put("promissoria500inv.txt", 500);
-		nomeArqs.put("promissoria500ord.txt", 500);
-		nomeArqs.put("promissoria1000alea.txt", 1000);
-		nomeArqs.put("promissoria1000inv.txt", 1000);
-		nomeArqs.put("promissoria1000ord.txt", 1000);
-		nomeArqs.put("promissoria5000alea.txt", 5000);
-		nomeArqs.put("promissoria5000inv.txt", 5000);
-		nomeArqs.put("promissoria5000ord.txt", 5000);
-		nomeArqs.put("promissoria10000alea.txt", 10000);
-		nomeArqs.put("promissoria10000inv.txt", 10000);
-		nomeArqs.put("promissoria10000ord.txt", 10000);
-		nomeArqs.put("promissoria30000alea.txt", 30000);
-		nomeArqs.put("promissoria30000inv.txt", 30000);
-		nomeArqs.put("promissoria30000ord.txt", 30000);
+		nomeArqs.put("promissoria500alea", 500);
+		nomeArqs.put("promissoria500inv", 500);
+		nomeArqs.put("promissoria500ord", 500);
+		nomeArqs.put("promissoria1000alea", 1000);
+		nomeArqs.put("promissoria1000inv", 1000);
+		nomeArqs.put("promissoria1000ord", 1000);
+		nomeArqs.put("promissoria5000alea", 5000);
+		nomeArqs.put("promissoria5000inv", 5000);
+		nomeArqs.put("promissoria5000ord", 5000);
+		nomeArqs.put("promissoria10000alea", 10000);
+		nomeArqs.put("promissoria10000inv", 10000);
+		nomeArqs.put("promissoria10000ord", 10000);
+		nomeArqs.put("promissoria30000alea", 30000);
+		nomeArqs.put("promissoria30000inv", 30000);
+		nomeArqs.put("promissoria30000ord", 30000);
 
 		Promissoria[] vet = null;
 		Date[] datas = null;
+		long inicioProcesso = 0, fimProcesso = 0;
 		// pego as datas para a memória, pois será usado até o fim do programa
 		datas = SuporteArquivo.obterDatasParaPesquisa(pathArq + "data.txt", 400);
 		/*
@@ -43,22 +45,63 @@ public class Principal {
 		 */
 		for (String arquivo : nomeArqs.keySet()) {
 
-			// leio o arquivo e atribuo o resultado para o vetor de promissoria
-			vet = SuporteArquivo.leArquivo(pathArq + arquivo, nomeArqs.get(arquivo));
+			//======================================HEAPSORT + PESQUISA BINÁRIA===============================================
+			inicioProcesso = System.currentTimeMillis();
+			// faço o processo 5 vezes 
+			// HeapSort + Pesquisa binária
+			for (int i = 0; i < 4; i++) {
 
-			// executo o método HeapSort
-			Heapsort.executarHeapSort(vet);
-			// defino o caminho e nome do arquivo que será salvo em disco.
-			String caminhoArq = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\HeapSort" + arquivo;
-			// escrevo no arquivo
-			SuporteArquivo.escreverArquivo(vet, caminhoArq);
-
-			// realizo a pesquisa para cada data e adiciono em um vetor os indices
-			// encontrados
-			for (int i = 0; i < datas.length; i++) {
-				UsoGeral.pesquisaBinaria(datas[i], vet);
+				// leio o arquivo e atribuo o resultado para o vetor de promissoria
+				vet = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
+				// executo o método HeapSort
+				Heapsort.executarHeapSort(vet);
+				// defino o caminho e nome do arquivo que será salvo em disco.
+				String caminhoArq = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\HeapSort" + arquivo + ".txt";
+				// escrevo no arquivo
+				SuporteArquivo.escreverArquivo(vet, caminhoArq);
+				// realizo a pesquisa para cada data e adiciono em um vetor os indices
+				// encontrados
+				int[] vetIndices = new int[datas.length];
+				for (int j = 0; j < datas.length; j++) {
+					vetIndices[j] = UsoGeral.pesquisaBinaria(datas[j], vet);
+				}
+				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\HeapSortResultadoPesquisa"
+						+ arquivo + ".txt";
+				UsoGeral.escreverResultadoPesquisa(vetIndices, vet, caminhoResultado);
 			}
 
+			fimProcesso = System.currentTimeMillis();
+
+			System.out.println("HeapSort " + arquivo + " = " + ((fimProcesso - inicioProcesso) / 5 ) + " milissegundos");
+		
+			
+			//======================================QUICKSORT + PESQUISA BINÁRIA===============================================	
+			
+			inicioProcesso = System.currentTimeMillis();			
+			// QuickSort + Pesquisa binária
+			for (int i = 0; i < 4; i++) {
+
+				// leio o arquivo e atribuo o resultado para o vetor de promissoria
+				vet = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
+				// executo o método QuickSort
+				QuickSort.executarQuickSort(vet);
+				// defino o caminho e nome do arquivo que será salvo em disco.
+				String caminhoArq = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\Quicksort" + arquivo + ".txt";
+				// escrevo no arquivo
+				SuporteArquivo.escreverArquivo(vet, caminhoArq);
+				// realizo a pesquisa para cada data e adiciono em um vetor os indices
+				// encontrados
+				int[] vetIndices = new int[datas.length];
+				for (int j = 0; j < datas.length; j++) {
+					vetIndices[j] = UsoGeral.pesquisaBinaria(datas[j], vet);
+				}
+				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\QuicksortResultadoPesquisa"
+						+ arquivo + ".txt";
+				UsoGeral.escreverResultadoPesquisa(vetIndices, vet, caminhoResultado);
+			}
+
+			fimProcesso = System.currentTimeMillis();			
+			System.out.println("Quicksort " + arquivo + " = " + ((fimProcesso - inicioProcesso) / 5 ) + " milissegundos");
 		}
 	}
 

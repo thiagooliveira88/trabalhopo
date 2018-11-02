@@ -1,30 +1,38 @@
 package Metodos;
 
+import java.util.Date;
+
 import Objetos.Item;
+import Objetos.Promissoria;
 
 public class QuickSort {
-	private Item[] vetor;
-	private int nElem;
+	private static Promissoria[] vetor;
+	private static int nElem;
 
-	public void quicksort() {
-		this.ordena(0, this.nElem - 1);
+	public static void executarQuickSort(Promissoria[] vet) {
+		vetor = vet;
+		nElem = vet.length - 1;
+
+		ordena(0, nElem);
 	}
 
-	private void ordena(int esq, int dir) {
-		int pivo, i = esq, j = dir;
-		Item temp;
+	private static void ordena(int esq, int dir) {
+		int i = esq, j = dir;
 
-		pivo = this.vetor[(i + j) / 2].getChave();
+		Promissoria pivo = null;
+		Promissoria temp;
+
+		pivo = vetor[(i + j) / 2];
 
 		do {
-			while (this.vetor[i].getChave() < pivo)
+			while (vetor[i].getdataVenc().compareTo(pivo.getdataVenc()) < 0)
 				i++;
-			while (this.vetor[j].getChave() > pivo)
+			while (vetor[j].getdataVenc().compareTo(pivo.getdataVenc()) > 0)
 				j--;
 			if (i <= j) {
-				temp = this.vetor[i];
-				this.vetor[i] = this.vetor[j];
-				this.vetor[j] = temp;
+				temp = vetor[i];
+				vetor[i] = vetor[j];
+				vetor[j] = temp;
 				i++;
 				j--;
 			}

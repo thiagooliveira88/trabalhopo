@@ -5,8 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -69,7 +69,7 @@ public class SuporteArquivo {
 		}
 	}
 
-	public static Date[] obterDatasParaPesquisa(String arq,int tamVet) {
+	public static Date[] obterDatasParaPesquisa(String arq, int tamVet) {
 		Date[] datas = new Date[tamVet];
 
 		File f = new File(arq);
@@ -81,14 +81,10 @@ public class SuporteArquivo {
 			int i = 0;
 			while (sc.hasNextLine()) {
 				String linha = sc.nextLine();
-				// dividir a linha pelo separador ;
-				StringTokenizer st = new StringTokenizer(linha, ";");
 				// para cada campo do registro
-				while (st.hasMoreElements()) {
-					// extrair a data
-					datas[i] = (Date) UsoGeral.obterData(st.nextToken());
-					i++;
-				}
+				datas[i] = UsoGeral.obterData(linha);
+				i++;
+
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
