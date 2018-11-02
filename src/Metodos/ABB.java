@@ -1,44 +1,46 @@
 package Metodos;
 
-import Objetos.Item;
+import java.util.Date;
+
+import Objetos.Promissoria;
 
 public class ABB {
-	private NoArv raiz;
-	private int quantNos;
+	private static NoArv raiz;
+	private static int quantNos;
 
 	public ABB() {
-		this.quantNos = 0;
-		this.raiz = null;
+		quantNos = 0;
+		raiz = null;
 	}
 
 	public boolean eVazia() {
-		return (this.raiz == null);
+		return (raiz == null);
 	}
 
 	public NoArv getRaiz() {
-		return this.raiz;
+		return raiz;
 	}
 
 	public int getQuantNos() {
-		return this.quantNos;
+		return quantNos;
 	}
 
-	public boolean inserir(Item elem) {
-		if (pesquisar(elem.getChave())) {
+	public static boolean inserir(Promissoria elem) {
+		if (pesquisar(elem.getdataVenc())) {
 			return false;
 		} else {
-			this.raiz = inserir(elem, this.raiz);
-			this.quantNos++;
+			raiz = inserir(elem, raiz);
+			quantNos++;
 			return true;
 		}
 	}
 
-	public NoArv inserir(Item elem, NoArv no) {
+	private static NoArv inserir(Promissoria elem, NoArv no) {
 		if (no == null) {
 			NoArv novo = new NoArv(elem);
 			return novo;
 		} else {
-			if (elem.getChave() < no.getInfo().getChave()) {
+			if (elem.getdataVenc().compareTo(no.getInfo().getdataVenc()) < 0) {
 				no.setEsq(inserir(elem, no.getEsq()));
 				return no;
 			} else {
@@ -48,56 +50,25 @@ public class ABB {
 		}
 	}
 
-	public boolean pesquisar(int chave) {
-		if (pesquisar(chave, this.raiz) != null) {
+	public static boolean pesquisar(Date dataVenc) {
+		if (pesquisar(dataVenc, raiz) != null) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	private NoArv pesquisar(int chave, NoArv no) {
+	private static NoArv pesquisar(Date dataVenc, NoArv no) {
 		if (no != null) {
-			if (chave < no.getInfo().getChave()) {
-				no = pesquisar(chave, no.getEsq());
+			if (dataVenc.compareTo(no.getInfo().getdataVenc()) < 0) {
+				no = pesquisar(dataVenc, no.getEsq());
 			} else {
-				if (chave > no.getInfo().getChave()) {
-					no = pesquisar(chave, no.getDir());
+				if (dataVenc.compareTo(no.getInfo().getdataVenc()) > 0) {
+					no = pesquisar(dataVenc, no.getDir());
 				}
 			}
 		}
 		return no;
-	}
-
-	public boolean remover(int chave) {
-		if (pesquisar(chave, this.raiz) != null) {
-			this.raiz = remover(chave, this.raiz);
-			this.quantNos--;
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public NoArv remover(int chave, NoArv arv) {
-		if (chave < arv.getInfo().getChave()) {
-			arv.setEsq(remover(chave, arv.getEsq()));
-		} else {
-			if (chave > arv.getInfo().getChave()) {
-				arv.setDir(remover(chave, arv.getDir()));
-			} else {
-				if (arv.getDir() == null) {
-					return arv.getEsq();
-				} else {
-					if (arv.getEsq() == null) {
-						return arv.getDir();
-					} else {
-						arv.setEsq(Arrumar(arv, arv.getEsq()));
-					}
-				}
-			}
-		}
-		return arv;
 	}
 
 	private NoArv Arrumar(NoArv arv, NoArv maior) {
@@ -110,14 +81,14 @@ public class ABB {
 		return maior;
 	}
 
-	public Item[] CamCentral() {
+	public static Promissoria[] CamCentral() {
 		int[] n = new int[1];
 		n[0] = 0;
-		Item[] vet = new Item[this.quantNos];
-		return (FazCamCentral(this.raiz, vet, n));
+		Promissoria[] vet = new Promissoria[quantNos];
+		return (FazCamCentral(raiz, vet, n));
 	}
 
-	private Item[] FazCamCentral(NoArv arv, Item[] vet, int[] n) {
+	private static Promissoria[] FazCamCentral(NoArv arv, Promissoria[] vet, int[] n) {
 		if (arv != null) {
 			vet = FazCamCentral(arv.getEsq(), vet, n);
 			vet[n[0]] = arv.getInfo();
@@ -127,14 +98,14 @@ public class ABB {
 		return vet;
 	}
 
-	public Item[] CamPreFixado() {
+	public Promissoria[] CamPreFixado() {
 		int[] n = new int[1];
 		n[0] = 0;
-		Item[] vet = new Item[this.quantNos];
+		Promissoria[] vet = new Promissoria[this.quantNos];
 		return (FazCamPreFixado(this.raiz, vet, n));
 	}
 
-	private Item[] FazCamPreFixado(NoArv arv, Item[] vet, int[] n) {
+	private Promissoria[] FazCamPreFixado(NoArv arv, Promissoria[] vet, int[] n) {
 		if (arv != null) {
 			vet[n[0]] = arv.getInfo();
 			n[0]++;
@@ -144,14 +115,14 @@ public class ABB {
 		return vet;
 	}
 
-	public Item[] CamPosFixado() {
+	public Promissoria[] CamPosFixado() {
 		int[] n = new int[1];
 		n[0] = 0;
-		Item[] vet = new Item[this.quantNos];
+		Promissoria[] vet = new Promissoria[this.quantNos];
 		return (FazCamPosFixado(this.raiz, vet, n));
 	}
 
-	private Item[] FazCamPosFixado(NoArv arv, Item[] vet, int[] n) {
+	private Promissoria[] FazCamPosFixado(NoArv arv, Promissoria[] vet, int[] n) {
 		if (arv != null) {
 			vet = FazCamPosFixado(arv.getEsq(), vet, n);
 			vet = FazCamPosFixado(arv.getDir(), vet, n);

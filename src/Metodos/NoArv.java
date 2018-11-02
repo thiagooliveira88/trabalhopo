@@ -1,12 +1,11 @@
 package Metodos;
 
-import Objetos.Item;
-
+import Objetos.Promissoria;
 public class NoArv {
-	private Item info; // o tipo Item está declarado no capítulo 1
+	private Promissoria info; 
 	private NoArv esq, dir;
 
-	public NoArv(Item elem) {
+	public NoArv(Promissoria elem) {
 		this.info = elem;
 		this.esq = null;
 		this.dir = null;
@@ -20,7 +19,7 @@ public class NoArv {
 		return this.dir;
 	}
 
-	public Item getInfo() {
+	public Promissoria getInfo() {
 		return this.info;
 	}
 
@@ -32,7 +31,7 @@ public class NoArv {
 		this.dir = no;
 	}
 
-	public void setInfo(Item elem) {
+	public void setInfo(Promissoria elem) {
 		this.info = elem;
 	}
 

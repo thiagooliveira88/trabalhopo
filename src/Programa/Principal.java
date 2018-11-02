@@ -2,6 +2,8 @@ package Programa;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
+
+import Metodos.ABB;
 import Metodos.Heapsort;
 import Metodos.QuickSort;
 import Metodos.UsoGeral;
@@ -102,6 +104,41 @@ public class Principal {
 
 			fimProcesso = System.currentTimeMillis();			
 			System.out.println("Quicksort " + arquivo + " = " + ((fimProcesso - inicioProcesso) / 5 ) + " milissegundos");
+			
+			
+			//======================================ARVORE BINÁRIA DE BUSCA===============================================	
+			
+			inicioProcesso = System.currentTimeMillis();			
+			// ABB
+			for (int i = 0; i < 4; i++) {
+
+				// leio o arquivo e atribuo o resultado para o vetor de promissoria
+				vet = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
+				// insiro os registros no método ABB
+				for (int j = 0; j < vet.length; j++) {
+					ABB.inserir(vet[i]);
+				}
+				
+				//ordeno a ABB
+				vet = ABB.CamCentral();
+				
+				// defino o caminho e nome do arquivo que será salvo em disco.
+				String caminhoArq = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ABB" + arquivo + ".txt";
+				// escrevo no arquivo
+				SuporteArquivo.escreverArquivo(vet, caminhoArq);
+				// realizo a pesquisa para cada data e adiciono em um vetor os indices
+				// encontrados
+				int[] vetIndices = new int[datas.length];
+				for (int j = 0; j < datas.length; j++) {
+					vetIndices[j] = UsoGeral.pesquisaBinaria(datas[j], vet);
+				}
+				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ABBResultadoPesquisa"
+						+ arquivo + ".txt";
+				UsoGeral.escreverResultadoPesquisa(vetIndices, vet, caminhoResultado);
+			}
+
+			fimProcesso = System.currentTimeMillis();			
+			System.out.println("ABB " + arquivo + " = " + ((fimProcesso - inicioProcesso) / 5 ) + " milissegundos");
 		}
 	}
 
