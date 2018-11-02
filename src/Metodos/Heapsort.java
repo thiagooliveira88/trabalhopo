@@ -6,7 +6,7 @@ public class Heapsort {
 	private static int nElem;
 	private static Promissoria[] vetor;
 	
-	public static void executaHeapSort(Promissoria[] pro) {
+	public static void executarHeapSort(Promissoria[] pro) {
 		vetor = pro;
 		nElem = pro.length - 1;
 		

@@ -1,10 +1,12 @@
 package Metodos;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import Objetos.Promissoria;
 
 public class UsoGeral {
-	
+
 	public static int pesquisaBinaria(Date dataVenc, Promissoria[] pro) {
 		int meio, esq, dir;
 		esq = 0;
@@ -21,5 +23,16 @@ public class UsoGeral {
 			}
 		}
 		return -1;
+	}
+
+	public static Date obterData(String dataVenc) {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = null;
+		try {
+			date = formatter.parse(dataVenc);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
 	}
 }

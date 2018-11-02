@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import Metodos.UsoGeral;
+
 public class Promissoria {
 	private String nome, cpf, valor, paga;
 	private Date dataVenc;
@@ -13,22 +15,11 @@ public class Promissoria {
 	}
 
 	public Promissoria(String dataVenc, String nome, String cpf, String valor, String paga) {
-		this.dataVenc = this.obterData(dataVenc);
+		this.dataVenc = UsoGeral.obterData(dataVenc);
 		this.nome = nome;
 		this.cpf = cpf;
 		this.valor = valor;
 		this.paga = paga;
-	}
-
-	private Date obterData(String dataVenc) {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = null;
-		try {
-			date = formatter.parse(dataVenc);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return date;
 	}
 
 	public void setNome(String nome) {

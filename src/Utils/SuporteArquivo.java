@@ -5,10 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import Metodos.UsoGeral;
 import Objetos.Promissoria;
 
 public class SuporteArquivo {
@@ -51,7 +53,7 @@ public class SuporteArquivo {
 
 			// separador dos campos
 			String sp = ";";
-			
+
 			// retornar a data para string
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -65,5 +67,32 @@ public class SuporteArquivo {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+
+	public static Date[] obterDatasParaPesquisa(String arq,int tamVet) {
+		Date[] datas = new Date[tamVet];
+
+		File f = new File(arq);
+		Scanner sc = null;
+		// lê arquivo
+		try {
+			sc = new Scanner(f);
+			// enquanto houver linhas ...
+			int i = 0;
+			while (sc.hasNextLine()) {
+				String linha = sc.nextLine();
+				// dividir a linha pelo separador ;
+				StringTokenizer st = new StringTokenizer(linha, ";");
+				// para cada campo do registro
+				while (st.hasMoreElements()) {
+					// extrair a data
+					datas[i] = (Date) UsoGeral.obterData(st.nextToken());
+					i++;
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return datas;
 	}
 }
