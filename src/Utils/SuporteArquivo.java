@@ -43,7 +43,6 @@ public class SuporteArquivo {
 			e.printStackTrace();
 		}
 		return promissorias;
-
 	}
 
 	public static void escreverArquivo(Promissoria[] pro, String caminhoArquivo) {
@@ -90,5 +89,71 @@ public class SuporteArquivo {
 			e.printStackTrace();
 		}
 		return datas;
+	}
+
+	public static void escreverResultadoPesquisa(int[] vetIndices, Date[] datas, Promissoria[] vetPromissoria,
+			String caminhoResultado) {
+		try {
+			FileWriter arquivo = new FileWriter(caminhoResultado);
+			PrintWriter gravarArquivo = new PrintWriter(arquivo);
+
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			Double totalNaoPago = 0D;
+			String datasNaoEncontradas = "";
+			// percorro todo o vetor
+			for (int i = 0; i < vetIndices.length; i++) {
+
+				int esq = vetIndices[i];
+				// aqui se esquerda for maior que 0, será uma data válida,
+				// então vou andando para esquerda verificando se as datas são iguais
+				// e decremento esquerda.
+				while (esq > 0 && vetPromissoria[esq].getdataVenc().equals(vetPromissoria[esq - 1].getdataVenc())) {
+					esq--;
+				}
+				int dir = vetIndices[i];
+				// faço a mesma coisa, só que agora para direita do vetor.
+				// se as datas forem iguais vou incrementando direita
+				// fazendo isso eu tenho um intervalo de indices que possuem a mesma data
+				// e dará para agrupar o resultado por data.
+				while (dir > 0 && dir < vetPromissoria.length - 1
+						&& vetPromissoria[dir].getdataVenc().equals(vetPromissoria[dir + 1].getdataVenc())) {
+					dir++;
+				}
+				if (vetIndices[i] == -1) {
+					// concatena as datas não encontradas
+					datasNaoEncontradas += formatter.format(datas[i]) + "\n";
+				} else {
+					// percorro o intervalo de datas iguais encontradas da esquerda para direita.
+					// que são pagas
+					totalNaoPago = 0D;
+					gravarArquivo.println("PAGAS:");
+					for (int j = esq; j <= dir; j++) {
+						if (Boolean.parseBoolean(vetPromissoria[j].getPaga())) {
+							gravarArquivo.println(formatter.format(vetPromissoria[j].getdataVenc()) + ";"
+									+ (vetPromissoria[j].getValor()) + ";" + vetPromissoria[j].getNome());
+						}
+					}
+					// percorro o intervalo de datas iguais encontradas da esquerda para direita.
+					// que não são pagas
+					gravarArquivo.println("NÃO PAGAS:");
+					for (int j = esq; j <= dir; j++) {
+						if (!Boolean.parseBoolean(vetPromissoria[j].getPaga())) {
+							gravarArquivo.println(formatter.format(vetPromissoria[j].getdataVenc()) + ";"
+									+ (vetPromissoria[j].getValor()) + ";" + vetPromissoria[j].getNome());
+
+							totalNaoPago += Double.parseDouble(vetPromissoria[j].getValor());
+						}
+					}
+					gravarArquivo.println("TOTAL NÃO PAGA: " + totalNaoPago);
+					gravarArquivo.println("========================================================================");
+				}
+			}
+			// grava as datas não encontradas
+			gravarArquivo.println("NÃO HÁ PROMISSÓRIAS NAS DATAS MENCIONADAS:" + "\n" + datasNaoEncontradas);	
+			gravarArquivo.close();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
 }
