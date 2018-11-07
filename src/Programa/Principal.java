@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 
 import Metodos.ABB;
+import Metodos.HashingEncadeado;
 import Metodos.Heapsort;
 import Metodos.QuickSort;
 import Metodos.UsoGeral;
@@ -52,7 +53,7 @@ public class Principal {
 			inicioExec = System.currentTimeMillis();
 			// faço o processo 5 vezes
 			// HeapSort + Pesquisa binária
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 1; i++) {
 
 				// leio o arquivo e atribuo o resultado para o vetor de promissoria
 				vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
@@ -82,7 +83,7 @@ public class Principal {
 
 			inicioExec = System.currentTimeMillis();
 			// QuickSort + Pesquisa binária
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 1; i++) {
 
 				// leio o arquivo e atribuo o resultado para o vetor de promissoria
 				vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
@@ -106,8 +107,7 @@ public class Principal {
 			fimExec = System.currentTimeMillis();
 			System.out.println("Quicksort " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
 
-			// ======================================ARVORE BINÁRIA DE
-			// BUSCA===============================================
+			// ======================================ARVORE BINÁRIA DE BUSCA===============================================
 
 //			inicioExec = System.currentTimeMillis();
 //			// ABB
@@ -140,6 +140,41 @@ public class Principal {
 //
 //			fimExec = System.currentTimeMillis();
 //			System.out.println("ABB " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
+			
+			
+			// =====================================HASHING COM ENCADEAMENTO ===============================================
+
+			inicioExec = System.currentTimeMillis();
+			// Hashing com encadeamento
+			HashingEncadeado hashingEncad = new HashingEncadeado(nomeArqs.get(arquivo));
+			
+			for (int i = 0; i < 4; i++) {
+
+				// leio o arquivo e atribuo o resultado para o vetor de promissoria
+				vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
+				// insiro os registros
+				for (int j = 0; j < vetPromissoria.length; j++) {
+					hashingEncad.inserir(vetPromissoria[j]);
+				}
+
+				// defino o caminho e nome do arquivo que será salvo em disco.
+				//String caminhoArq = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\Hashing" + arquivo + ".txt";
+				// escrevo no arquivo
+				//SuporteArquivo.escreverArquivo(vetPromissoria, caminhoArq);
+				
+				// realizo a pesquisa para cada data e adiciono em um vetor os indices
+				// encontrados
+				int[] vetIndices = new int[datas.length];
+				for (int j = 0; j < datas.length; j++) {
+					hashingEncad.pesquisar(datas[j]);
+				}
+				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\HashingResultadoPesquisa" + arquivo
+						+ ".txt";
+				//SuporteArquivo.escreverResultadoPesquisa(vetIndices, datas, vetPromissoria, caminhoResultado);
+			}
+
+			fimExec = System.currentTimeMillis();
+			System.out.println("HashingEncadeado " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
 		}
 	}
 

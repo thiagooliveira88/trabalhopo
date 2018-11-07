@@ -36,59 +36,67 @@ public class HashingEncadeado {
 		this.tamanho = tamanho;
 	}
 
-	public void inserir(Promissoria promi, int tam) {
+	public void inserir(Promissoria promi) {
 
 		int pos = 0;
 		Date data = promi.getdataVenc();
-		pos = obterPosicaoHash(data, tam);
+		pos = obterPosicaoHash(data);
 		this.getVetorH()[pos].inserirUltimo(promi);
 	}
 
-	private int obterPosicaoHash(Date data, int tam) {
+	private int obterPosicaoHash(Date data) {
 		int mod = 0;
-		int m = 0;
+		int soma = 0;
 		char carac;
 		for (int i = 0; i < data.toString().length(); i++) {
 
 			carac = data.toString().charAt(i);
-			m += Character.getNumericValue(carac);
+			soma += Character.getNumericValue(carac);
 		}
 
-		switch (tam) {
-		case 500:
-			mod = (m % 503);
+		switch (this.tamanho) {
+		case 550:
+			mod = (soma % 557);
 			break;
-		case 1000:
-			mod = (m % 1009);
+		case 1100:
+			mod = (soma % 1103);
 			break;
-		case 5000:
-			mod = (m % 5003);
+		case 5500:
+			mod = (soma % 5503);
 			break;
-		case 10000:
-			mod = (m % 10007);
+		case 11000:
+			mod = (soma % 11003);
 			break;
-		case 30000:
-			mod = (m % 30011);
+		case 33000:
+			mod = (soma % 33013);
 			break;
 		}
 		return mod;
 	}
-	
-	public int pesquisaHash(Date data , int tam){
-		String str = "";
+
+	public void pesquisar(Date data) {
+
+		pesquisaHash(data);
+
+	}
+
+	private Promissoria pesquisaHash(Date data) {
 		NoListaSimples aux;
 		int pos = 0;
-		pos = obterPosicaoHash(data, tam);
-		if (pos>=0 && pos<this.tamanho){
-			if (this.vetorH[pos].getPrim()!=null){
+		pos = obterPosicaoHash(data);
+		if (pos >= 0 && pos < this.tamanho) {
+			if (this.vetorH[pos].getPrim() != null) {
 				aux = this.vetorH[pos].getPrim();
-				while (aux != null){
-//					if (aux.getInfo().compareTo(data)==0)
-//						str += aux.getInfo().toString()+"\n";
-//					aux = aux.getProx();
+				while (aux != null) {
+
+					if (aux.getInfo().getdataVenc().compareTo(data) == 0) {
+						return aux.getInfo();
+					} else {
+						aux = aux.getProx();
+					}
 				}
-			}				
+			}
 		}
-		return -1;
+		return null;
 	}
 }
