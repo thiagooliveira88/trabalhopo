@@ -1,14 +1,16 @@
 package Metodos;
 
 import Objetos.Promissoria;
+
 public class NoArv {
-	private Promissoria info; 
-	private NoArv esq, dir;
+	private Promissoria info;
+	private NoArv esq, dir, noRepetido;
 
 	public NoArv(Promissoria elem) {
 		this.info = elem;
 		this.esq = null;
 		this.dir = null;
+		this.noRepetido = null;
 	}
 
 	public NoArv getEsq() {
@@ -33,6 +35,14 @@ public class NoArv {
 
 	public void setInfo(Promissoria elem) {
 		this.info = elem;
+	}
+
+	public NoArv getNoRepetido() {
+		return noRepetido;
+	}
+
+	public void setNoRepetido(NoArv noRepetido) {
+		this.noRepetido = noRepetido;
 	}
 
 }

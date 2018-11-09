@@ -59,8 +59,10 @@ public class SuporteArquivo {
 			// percorre toda as promissorias do vetor para escrever no arquivo.
 			for (int i = 0; i < pro.length; i++) {
 
-				gravarArq.println(formatter.format(pro[i].getdataVenc()) + sp + pro[i].getNome() + sp + pro[i].getCpf()
-						+ sp + pro[i].getValor() + sp + pro[i].getPaga());
+				if (pro[i] != null) {
+					gravarArq.println(formatter.format(pro[i].getdataVenc()) + sp + pro[i].getNome() + sp
+							+ pro[i].getCpf() + sp + pro[i].getValor() + sp + pro[i].getPaga());
+				}
 			}
 			gravarArq.close();
 		} catch (IOException e) {
@@ -149,7 +151,7 @@ public class SuporteArquivo {
 				}
 			}
 			// grava as datas não encontradas
-			gravarArquivo.println("NÃO HÁ PROMISSÓRIAS NAS DATAS MENCIONADAS:" + "\n" + datasNaoEncontradas);	
+			gravarArquivo.println("NÃO HÁ PROMISSÓRIAS NAS DATAS MENCIONADAS:" + "\n" + datasNaoEncontradas);
 			gravarArquivo.close();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());

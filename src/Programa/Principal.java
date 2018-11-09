@@ -109,37 +109,38 @@ public class Principal {
 
 			// ======================================ARVORE BINÁRIA DE BUSCA===============================================
 
-//			inicioExec = System.currentTimeMillis();
-//			// ABB
-//			for (int i = 0; i < 4; i++) {
-//
-//				// leio o arquivo e atribuo o resultado para o vetor de promissoria
-//				vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
-//				// insiro os registros no método ABB
-//				for (int j = 0; j < vetPromissoria.length; j++) {
-//					ABB.inserir(vetPromissoria[i]);
-//				}
-//
-//				// ordeno a ABB
-//				vetPromissoria = ABB.CamCentral();
-//
-//				// defino o caminho e nome do arquivo que será salvo em disco.
-//				String caminhoArq = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ABB" + arquivo + ".txt";
-//				// escrevo no arquivo
-//				SuporteArquivo.escreverArquivo(vetPromissoria, caminhoArq);
-//				// realizo a pesquisa para cada data e adiciono em um vetor os indices
-//				// encontrados
-//				int[] vetIndices = new int[datas.length];
-//				for (int j = 0; j < datas.length; j++) {
-//					vetIndices[j] = UsoGeral.pesquisaBinaria(datas[j], vetPromissoria);
-//				}
-//				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ABBResultadoPesquisa" + arquivo
-//						+ ".txt";
-//				SuporteArquivo.escreverResultadoPesquisa(vetIndices, datas, vetPromissoria, caminhoResultado);
-//			}
-//
-//			fimExec = System.currentTimeMillis();
-//			System.out.println("ABB " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
+			inicioExec = System.currentTimeMillis();
+			// ABB
+			for (int i = 0; i < 4; i++) {
+
+				int tamanhoVet = nomeArqs.get(arquivo);
+				// leio o arquivo e atribuo o resultado para o vetor de promissoria
+				vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", tamanhoVet);
+				// insiro os registros no método ABB
+				for (int j = 0; j < vetPromissoria.length; j++) {
+					ABB.inserir(vetPromissoria[j]);
+				}
+
+				// ordeno a ABB
+				vetPromissoria = ABB.CamCentral(tamanhoVet);
+
+				// defino o caminho e nome do arquivo que será salvo em disco.
+				String caminhoArq = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ABB" + arquivo + ".txt";
+				// escrevo no arquivo
+				SuporteArquivo.escreverArquivo(vetPromissoria, caminhoArq);
+				// realizo a pesquisa para cada data e adiciono em um vetor os indices
+				// encontrados
+				int[] vetIndices = new int[datas.length];
+				for (int j = 0; j < datas.length; j++) {
+					vetIndices[j] = UsoGeral.pesquisaBinaria(datas[j], vetPromissoria);
+				}
+				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ABBResultadoPesquisa" + arquivo
+						+ ".txt";
+				SuporteArquivo.escreverResultadoPesquisa(vetIndices, datas, vetPromissoria, caminhoResultado);
+			}
+
+			fimExec = System.currentTimeMillis();
+			System.out.println("ABB " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
 			
 			
 			// =====================================HASHING COM ENCADEAMENTO ===============================================
