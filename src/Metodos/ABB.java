@@ -46,7 +46,16 @@ public class ABB {
 		} else {
 
 			if (elem.getdataVenc().compareTo(no.getInfo().getdataVenc()) == 0) {
-				no.setNoRepetido(new NoArv(elem));
+
+				// se for igual, vou caminhando até o no nulo para inserir o elemento.
+				NoArv temp = no;
+				while (temp.getNoRepetido() != null) {
+					temp = temp.getNoRepetido();
+				}
+				// se chegou até aqui, quer dizer que o NoRepetido esta nulo
+				// insiro o elemento repetido.
+				temp.setNoRepetido(new NoArv(elem));
+
 				return no;
 			} else if (elem.getdataVenc().compareTo(no.getInfo().getdataVenc()) < 0) {
 				no.setEsq(inserir(elem, no.getEsq()));
@@ -94,7 +103,12 @@ public class ABB {
 		n[0] = 0;
 		Promissoria[] vet = new Promissoria[tamanhoVet];
 
-		return (FazCamCentral(raiz, vet, n));
+		Promissoria[] vetor = FazCamCentral(raiz, vet, n);
+
+		raiz = null;
+		quantNos = 0;
+
+		return vetor;
 	}
 
 	private static Promissoria[] FazCamCentral(NoArv arv, Promissoria[] vet, int[] n) {
@@ -108,14 +122,32 @@ public class ABB {
 
 			// aqui vamos pegar as datas repetidas que estão encadeadas no nó principal
 			// e adicionar no vetor
-			NoArv aux = arv;
-			while (aux != null && aux.getNoRepetido() != null) {
-				vet[n[0]] = aux.getNoRepetido().getInfo();
+			NoArv aux = arv.getNoRepetido();
+			while (aux != null && aux.getInfo() != null) {
+				vet[n[0]] = aux.getInfo();
 				n[0]++;
-				aux = aux.getNoRepetido().getNoRepetido();
+				aux = aux.getNoRepetido();
 			}
 			vet = FazCamCentral(arv.getDir(), vet, n);
+
 		}
 		return vet;
 	}
+
+	public static ABB ArvoreBalanceada(Promissoria[] vetOrdenado) {
+		ABB temp = new ABB();
+		Balancear(vetOrdenado, temp, 0, vetOrdenado.length - 1);
+		return temp;
+	}
+
+	private static void Balancear(Promissoria[] vet, ABB temp, int inic, int fim) {
+		int meio;
+		if (fim >= inic) {
+			meio = (inic + fim) / 2;
+			temp.inserir(vet[meio]);
+			Balancear(vet, temp, inic, meio - 1);
+			Balancear(vet, temp, meio + 1, fim);
+		}
+	}
+
 }
