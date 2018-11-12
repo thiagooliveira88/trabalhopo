@@ -53,7 +53,7 @@ public class Principal {
 			inicioExec = System.currentTimeMillis();
 			// faço o processo 5 vezes
 			// HeapSort + Pesquisa binária
-			for (int i = 0; i < 1; i++) {
+			for (int i = 0; i < 4; i++) {
 
 				// leio o arquivo e atribuo o resultado para o vetor de promissoria
 				vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
@@ -83,7 +83,7 @@ public class Principal {
 
 			inicioExec = System.currentTimeMillis();
 			// QuickSort + Pesquisa binária
-			for (int i = 0; i < 1; i++) {
+			for (int i = 0; i < 4; i++) {
 
 				// leio o arquivo e atribuo o resultado para o vetor de promissoria
 				vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
