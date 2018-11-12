@@ -1,30 +1,30 @@
 package Metodos;
 
-import Objetos.Item;
+import Objetos.Promissoria;
 
-public class Nodo {
-	private Item info;
-	private Nodo esq, dir;
+public class NodoAVL {
+	private Promissoria info;
+	private NodoAVL esq, dir, noRepetido;
 	private byte fatorBalanceamento;
 
-	Nodo(Item i) {
-		this.info = i;
+	NodoAVL(Promissoria promissoria) {
+		this.info = promissoria;
 		this.fatorBalanceamento = 0;
 	}
 
-	public Nodo getDir() {
+	public NodoAVL getDir() {
 		return this.dir;
 	}
 
-	public void setDir(Nodo dir) {
+	public void setDir(NodoAVL dir) {
 		this.dir = dir;
 	}
 
-	public Nodo getEsq() {
+	public NodoAVL getEsq() {
 		return this.esq;
 	}
 
-	public void setEsq(Nodo esq) {
+	public void setEsq(NodoAVL esq) {
 		this.esq = esq;
 	}
 
@@ -37,7 +37,15 @@ public class Nodo {
 		this.fatorBalanceamento = fatorBalanceamento;
 	}
 
-	public Item getInfo() {
+	public Promissoria getInfo() {
 		return this.info;
+	}
+
+	public NodoAVL getNoRepetido() {
+		return noRepetido;
+	}
+
+	public void setNoRepetido(NodoAVL noRepetido) {
+		this.noRepetido = noRepetido;
 	}
 }

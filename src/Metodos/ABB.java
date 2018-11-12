@@ -134,8 +134,7 @@ public class ABB {
 		return vet;
 	}
 
-	public static ABB ArvoreBalanceada(Promissoria[] vetOrdenado) {
-		ABB temp = new ABB();
+	public static ABB ArvoreBalanceada(Promissoria[] vetOrdenado, ABB temp) {
 		Balancear(vetOrdenado, temp, 0, vetOrdenado.length - 1);
 		return temp;
 	}

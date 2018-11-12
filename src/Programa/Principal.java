@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 
 import Metodos.ABB;
+import Metodos.ArvoreAVL;
 import Metodos.HashingEncadeado;
 import Metodos.Heapsort;
 import Metodos.QuickSort;
@@ -12,6 +13,7 @@ import Objetos.Promissoria;
 import Utils.SuporteArquivo;
 
 public class Principal {
+	private static final ABB ArvoreBinaria = null;
 	private static String pathAPP = System.getProperty("user.dir");
 	private static String pathArq = pathAPP + "\\ArquivosTrab\\";
 
@@ -110,28 +112,64 @@ public class Principal {
 			// ======================================ARVORE BINÁRIA DE
 			// BUSCA===============================================
 
-			inicioExec = System.currentTimeMillis();
-			// ABB
-			for (int i = 0; i < 4; i++) {
+//			inicioExec = System.currentTimeMillis();
+//			// ArvoreBinaria
+//			for (int i = 0; i < 4; i++) {
+//
+//				int tamanhoVet = nomeArqs.get(arquivo);
+//				// leio o arquivo e atribuo o resultado para o vetor de promissoria
+//				vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", tamanhoVet);
+//				// insiro os registros no método ArvoreBinaria
+//				for (int j = 0; j < vetPromissoria.length; j++) {
+//					ABB.inserir(vetPromissoria[j]);
+//				}
+//
+//				// ordeno a ArvoreBinaria
+//				vetPromissoria = ABB.CamCentral(tamanhoVet);
+//
+//				// balancear a ArvoreBinaria
+//				ABB.ArvoreBalanceada(vetPromissoria, ArvoreBinaria);
+//
+//				// defino o caminho e nome do arquivo que será salvo em disco.
+//				String caminhoArq = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ArvoreBinaria" + arquivo + ".txt";
+//				// escrevo no arquivo
+//				SuporteArquivo.escreverArquivo(vetPromissoria, caminhoArq);
+//				// realizo a pesquisa para cada data e adiciono em um vetor os indices
+//				// encontrados
+//				int[] vetIndices = new int[datas.length];
+//				for (int j = 0; j < datas.length; j++) {
+//					vetIndices[j] = UsoGeral.pesquisaBinaria(datas[j], vetPromissoria);
+//				}
+//				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ArvoreBinariaResultadoPesquisa"
+//						+ arquivo + ".txt";
+//				SuporteArquivo.escreverResultadoPesquisa(vetIndices, datas, vetPromissoria, caminhoResultado);
+//			}
+//
+//			fimExec = System.currentTimeMillis();
+//			System.out.println("ArvoreBinaria " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
 
+			// ======================================ARVORE AVL===============================================
+
+			inicioExec = System.currentTimeMillis();
+			// ARVORE AVL
+			ArvoreAVL arvoreAVL = null;
+			for (int i = 0; i < 4; i++) {
+				
+				arvoreAVL = new ArvoreAVL();
+				
 				int tamanhoVet = nomeArqs.get(arquivo);
 				// leio o arquivo e atribuo o resultado para o vetor de promissoria
 				vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", tamanhoVet);
-				// insiro os registros no método ABB
+				// insiro os registros no método ARVORE AVL
 				for (int j = 0; j < vetPromissoria.length; j++) {
-					ABB.inserir(vetPromissoria[j]);
+					arvoreAVL.insereRaiz(vetPromissoria[j]);
 				}
 
-				// ordeno a ABB
-				vetPromissoria = ABB.CamCentral(tamanhoVet);
+				// ordeno a ARVORE AVL
+				vetPromissoria = arvoreAVL.CamCentral(tamanhoVet);
 
-				// balancear a ABB
-//				ABB arvoreBalanceada = ABB.ArvoreBalanceada(vetPromissoria);
-//				
-//				vetPromissoria = arvoreBalanceada.CamCentral(tamanhoVet);
-				
 				// defino o caminho e nome do arquivo que será salvo em disco.
-				String caminhoArq = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ABB" + arquivo + ".txt";
+				String caminhoArq = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ArvoreAVL" + arquivo + ".txt";
 				// escrevo no arquivo
 				SuporteArquivo.escreverArquivo(vetPromissoria, caminhoArq);
 				// realizo a pesquisa para cada data e adiciono em um vetor os indices
@@ -140,14 +178,15 @@ public class Principal {
 				for (int j = 0; j < datas.length; j++) {
 					vetIndices[j] = UsoGeral.pesquisaBinaria(datas[j], vetPromissoria);
 				}
-				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ABBResultadoPesquisa" + arquivo
-						+ ".txt";
+				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ArvoreAVLResultadoPesquisa"
+						+ arquivo + ".txt";
 				SuporteArquivo.escreverResultadoPesquisa(vetIndices, datas, vetPromissoria, caminhoResultado);
 			}
 
 			fimExec = System.currentTimeMillis();
-			System.out.println("ABB " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
-
+			System.out.println("ArvoreAVL " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
+			
+			
 			// =====================================HASHING COM ENCADEAMENTO
 			// ===============================================
 
