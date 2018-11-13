@@ -1,5 +1,6 @@
 package Metodos;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Objetos.Promissoria;
@@ -75,6 +76,37 @@ public class ABB {
 		}
 	}
 
+	private static NoArv pesquisarData(Date dataVenc) {
+
+		NoArv noPesquisa = pesquisar(dataVenc, raiz);
+
+		if (noPesquisa != null)
+			return noPesquisa;
+
+		return null;
+
+	}
+
+	public static String obterPesquisaString(Date data) {
+
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		NoArv noData = pesquisarData(data);
+		String concatData = "";
+		String separadorSplit = ",";
+
+		if (noData != null) {
+			while (noData != null && noData.getInfo() != null) {
+				Promissoria info = noData.getInfo();
+
+				concatData += formatter.format(info.getdataVenc()) + ";" + info.getNome() + ";" + info.getCpf() + ";"
+						+ info.getValor() + ";" + info.getPaga() + separadorSplit;
+
+				noData = noData.getNoRepetido();
+			}
+		}
+		return concatData;
+	}
+
 	private static NoArv pesquisar(Date dataVenc, NoArv no) {
 		if (no != null) {
 			if (dataVenc.compareTo(no.getInfo().getdataVenc()) < 0) {
@@ -88,22 +120,13 @@ public class ABB {
 		return no;
 	}
 
-	private NoArv Arrumar(NoArv arv, NoArv maior) {
-		if (maior.getDir() != null) {
-			maior.setDir(Arrumar(arv, maior.getDir()));
-		} else {
-			arv.setInfo(maior.getInfo());
-			maior = maior.getEsq();
-		}
-		return maior;
-	}
-
-	public static Promissoria[] CamCentral(int tamanhoVet) {
+	public static NoArv[] CamCentral(int tamanhoVet) {
 		int[] n = new int[1];
 		n[0] = 0;
-		Promissoria[] vet = new Promissoria[quantNos];
 
-		Promissoria[] vetor = FazCamCentral(raiz, vet, n);
+		NoArv[] vet = new NoArv[quantNos];
+
+		NoArv[] vetor = FazCamCentral(raiz, vet, n);
 
 		raiz = null;
 		quantNos = 0;
@@ -111,11 +134,11 @@ public class ABB {
 		return vetor;
 	}
 
-	private static Promissoria[] FazCamCentral(NoArv arv, Promissoria[] vet, int[] n) {
+	private static NoArv[] FazCamCentral(NoArv arv, NoArv[] vet, int[] n) {
 		if (arv != null) {
 
 			vet = FazCamCentral(arv.getEsq(), vet, n);
-			vet[n[0]] = arv.getInfo();
+			vet[n[0]] = arv;
 			n[0]++;
 			vet = FazCamCentral(arv.getDir(), vet, n);
 
@@ -123,16 +146,17 @@ public class ABB {
 		return vet;
 	}
 
-	public static ABB ArvoreBalanceada(Promissoria[] vetOrdenado, ABB temp) {
+	public static ABB ArvoreBalanceada(NoArv[] vetOrdenado) {
+		ABB temp = new ABB();
 		Balancear(vetOrdenado, temp, 0, vetOrdenado.length - 1);
 		return temp;
 	}
 
-	private static void Balancear(Promissoria[] vet, ABB temp, int inic, int fim) {
+	private static void Balancear(NoArv[] vet, ABB temp, int inic, int fim) {
 		int meio;
 		if (fim >= inic) {
 			meio = (inic + fim) / 2;
-			temp.inserir(vet[meio]);
+			temp.inserir(vet[meio].getInfo());
 			Balancear(vet, temp, inic, meio - 1);
 			Balancear(vet, temp, meio + 1, fim);
 		}
