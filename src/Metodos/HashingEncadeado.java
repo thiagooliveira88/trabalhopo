@@ -1,5 +1,9 @@
 package Metodos;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Objetos.Promissoria;
@@ -38,10 +42,25 @@ public class HashingEncadeado {
 
 	public void inserir(Promissoria promi) {
 
-		int pos = 0;
-		Date data = promi.getdataVenc();
-		pos = obterPosicaoHash(data);
-		this.getVetorH()[pos].inserirUltimo(promi);
+		// pesquisa a data
+		NoListaSimples noNovo = pesquisaHash(promi.getdataVenc());
+		if (noNovo != null) {
+
+			NoListaSimples temp = noNovo;
+			while (temp.getNoDataRepetida() != null) {
+				temp = temp.getNoDataRepetida();
+			}
+			// se chegou até aqui, quer dizer que o NoRepetido esta nulo
+			// insiro o elemento repetido.
+			temp.setNoDataRepetida(new NoListaSimples(promi));
+			;
+		} else {
+
+			int pos = 0;
+			pos = obterPosicaoHash(promi.getdataVenc());
+			this.getVetorH()[pos].inserirUltimo(promi);
+		}
+
 	}
 
 	private int obterPosicaoHash(Date data) {
@@ -74,13 +93,27 @@ public class HashingEncadeado {
 		return mod;
 	}
 
-	public void pesquisar(Date data) {
+	public String pesquisar(Date data) {
 
-		pesquisaHash(data);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		NoListaSimples noData = pesquisaHash(data);
+		String concatData = "";
+		String separadorSplit = ",";
 
+		if (noData != null) {
+			while (noData != null && noData.getInfo() != null) {
+				Promissoria info = noData.getInfo();
+
+				concatData += formatter.format(info.getdataVenc()) + ";" + info.getNome() + ";" + info.getCpf() + ";"
+						+ info.getValor() + ";" + info.getPaga() + separadorSplit;
+
+				noData = noData.getNoDataRepetida();
+			}
+		}
+		return concatData;
 	}
 
-	private Promissoria pesquisaHash(Date data) {
+	private NoListaSimples pesquisaHash(Date data) {
 		NoListaSimples aux;
 		int pos = 0;
 		pos = obterPosicaoHash(data);
@@ -90,7 +123,7 @@ public class HashingEncadeado {
 				while (aux != null) {
 
 					if (aux.getInfo().getdataVenc().compareTo(data) == 0) {
-						return aux.getInfo();
+						return aux;
 					} else {
 						aux = aux.getProx();
 					}
@@ -98,5 +131,75 @@ public class HashingEncadeado {
 			}
 		}
 		return null;
+	}
+
+	public static void escreverResultadoPesquisa(String datasEncontradas, String datasNaoEncontradas,
+			String caminhoResultado) {
+		try {
+			FileWriter arquivo = new FileWriter(caminhoResultado);
+			PrintWriter gravarArquivo = new PrintWriter(arquivo);
+
+			String[] promissoria = datasEncontradas.split(",");
+			Double totalNaoPago = 0D;
+
+			String pagas = "";
+			String naoPagas = "";
+			String verificaData = null;
+			// percorro todo o vetor
+			for (int j = 0; j < promissoria.length; j++) {
+
+				String[] dados = promissoria[j].split(";");
+				/*
+				 * data = dados[0] nome = dados[1] cpf = dados[2] valor= dados[3] paga =
+				 * dados[4]
+				 */
+
+				if (verificaData != null && verificaData.equals(dados[0])) {
+
+					if (Boolean.parseBoolean(dados[4])) {
+						pagas += dados[0] + ";" + dados[3] + ";" + dados[1] + "\n";
+					}
+
+					if (!Boolean.parseBoolean(dados[4])) {
+
+						naoPagas += dados[0] + ";" + dados[3] + ";" + dados[1] + "\n";
+						totalNaoPago += Double.parseDouble(dados[3]);
+					}
+				} else {
+					if (pagas != "" || naoPagas != "") {
+						gravarArquivo.println("PAGAS:");
+						gravarArquivo.println(pagas);
+						gravarArquivo.println("NÃO PAGAS:");
+						gravarArquivo.println(naoPagas);
+						gravarArquivo.println("TOTAL NÃO PAGA: " + totalNaoPago);
+						gravarArquivo
+								.println("========================================================================");
+
+						pagas = "";
+						naoPagas = "";
+						totalNaoPago = 0D;
+					}
+					if (Boolean.parseBoolean(dados[4])) {
+						pagas += dados[0] + ";" + dados[3] + ";" + dados[1] + "\n";
+					}
+
+					if (!Boolean.parseBoolean(dados[4])) {
+
+						naoPagas += dados[0] + ";" + dados[3] + ";" + dados[1] + "\n";
+						totalNaoPago += Double.parseDouble(dados[3]);
+					}
+
+				}
+
+				verificaData = dados[0];
+
+			}
+			// grava as datas não encontradas
+			gravarArquivo.println("NÃO HÁ PROMISSÓRIAS NAS DATAS MENCIONADAS:" + "\n" + datasNaoEncontradas);
+			gravarArquivo.close();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
 }

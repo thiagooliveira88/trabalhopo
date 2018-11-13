@@ -3,22 +3,22 @@ package Metodos;
 import Objetos.Promissoria;
 
 public class ArvoreAVL {
-	private NodoAVL raiz;
-	private boolean h;
+	private static NodoAVL raiz;
+	private static boolean h;
 
 	public ArvoreAVL() {
-		this.raiz = null;
-		this.h = true;
+		raiz = null;
+		 h = true;
 	}
 
-	public void insereRaiz(Promissoria elem) {
-		this.raiz = this.insere(elem, this.raiz);
+	public static void insereRaiz(Promissoria elem) {
+		raiz = insere(elem, raiz);
 	}
 
-	private NodoAVL insere(Promissoria elem, NodoAVL no) {
+	private static NodoAVL insere(Promissoria elem, NodoAVL no) {
 		if (no == null) {
 			NodoAVL novo = new NodoAVL(elem);
-			this.h = true;
+		    h = true;
 			return novo;
 		} else {
 
@@ -36,51 +36,51 @@ public class ArvoreAVL {
 
 			} else if (elem.getdataVenc().compareTo(no.getInfo().getdataVenc()) < 0) {
 				// Insere à esquerda e verifica se precisa balancear à direita
-				no.setEsq(this.insere(elem, no.getEsq()));
-				no = this.balancearDir(no);
+				no.setEsq(insere(elem, no.getEsq()));
+				no = balancearDir(no);
 				return no;
 			} else {
 				// Insere à direita e verifica se precisa balancear à esquerda
-				no.setDir(this.insere(elem, no.getDir()));
-				no = this.balancearEsq(no);
+				no.setDir(insere(elem, no.getDir()));
+				no = balancearEsq(no);
 				return no;
 			}
 		}
 	}
 
-	private NodoAVL balancearDir(NodoAVL no) {
-		if (this.h)
+	private static NodoAVL balancearDir(NodoAVL no) {
+		if (h)
 			switch (no.getFatorBalanceamento()) {
 			case 1:
 				no.setFatorBalanceamento((byte) 0);
-				this.h = false;
+				h = false;
 				break;
 			case 0:
 				no.setFatorBalanceamento((byte) -1);
 				break;
 			case -1:
-				no = this.rotaçãoDireita(no);
+				no = rotaçãoDireita(no);
 			}
 		return no;
 	}
 
-	private NodoAVL balancearEsq(NodoAVL no) {
-		if (this.h)
+	private static NodoAVL balancearEsq(NodoAVL no) {
+		if (h)
 			switch (no.getFatorBalanceamento()) {
 			case -1:
 				no.setFatorBalanceamento((byte) 0);
-				this.h = false;
+				h = false;
 				break;
 			case 0:
 				no.setFatorBalanceamento((byte) 1);
 				break;
 			case 1:
-				no = this.rotaçãoEsquerda(no);
+				no = rotaçãoEsquerda(no);
 			}
 		return no;
 	}
 
-	private NodoAVL rotaçãoDireita(NodoAVL no) {
+	private static NodoAVL rotaçãoDireita(NodoAVL no) {
 		NodoAVL temp1, temp2;
 		temp1 = no.getEsq();
 		if (temp1.getFatorBalanceamento() == -1) {
@@ -105,11 +105,11 @@ public class ArvoreAVL {
 			no = temp2;
 		}
 		no.setFatorBalanceamento((byte) 0);
-		this.h = false;
+		h = false;
 		return no;
 	}
 
-	private NodoAVL rotaçãoEsquerda(NodoAVL no) {
+	private static NodoAVL rotaçãoEsquerda(NodoAVL no) {
 		NodoAVL temp1, temp2;
 		temp1 = no.getDir();
 		if (temp1.getFatorBalanceamento() == 1) {
@@ -134,40 +134,8 @@ public class ArvoreAVL {
 			no = temp2;
 		}
 		no.setFatorBalanceamento((byte) 0);
-		this.h = false;
+		h = false;
 		return no;
-	}
-
-	public Promissoria[] CamCentral(int tamanhoVet) {
-		int[] n = new int[1];
-		n[0] = 0;
-		Promissoria[] vet = new Promissoria[tamanhoVet];
-
-		Promissoria[] vetor = FazCamCentral(raiz, vet, n);
-		return vetor;
-	}
-
-	private Promissoria[] FazCamCentral(NodoAVL arv, Promissoria[] vet, int[] n) {
-		if (arv != null) {
-
-			vet = FazCamCentral(arv.getEsq(), vet, n);
-
-			// adiciona no vetor o nó principal
-			vet[n[0]] = arv.getInfo();
-			n[0]++;
-
-			// aqui vamos pegar as datas repetidas que estão encadeadas no nó principal
-			// e adicionar no vetor
-			NodoAVL aux = arv.getNoRepetido();
-			while (aux != null && aux.getInfo() != null) {
-				vet[n[0]] = aux.getInfo();
-				n[0]++;
-				aux = aux.getNoRepetido();
-			}
-			vet = FazCamCentral(arv.getDir(), vet, n);
-
-		}
-		return vet;
 	}
 
 }

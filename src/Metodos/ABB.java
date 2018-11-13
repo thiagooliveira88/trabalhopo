@@ -101,7 +101,7 @@ public class ABB {
 	public static Promissoria[] CamCentral(int tamanhoVet) {
 		int[] n = new int[1];
 		n[0] = 0;
-		Promissoria[] vet = new Promissoria[tamanhoVet];
+		Promissoria[] vet = new Promissoria[quantNos];
 
 		Promissoria[] vetor = FazCamCentral(raiz, vet, n);
 
@@ -115,19 +115,8 @@ public class ABB {
 		if (arv != null) {
 
 			vet = FazCamCentral(arv.getEsq(), vet, n);
-
-			// adiciona no vetor o nó principal
 			vet[n[0]] = arv.getInfo();
 			n[0]++;
-
-			// aqui vamos pegar as datas repetidas que estão encadeadas no nó principal
-			// e adicionar no vetor
-			NoArv aux = arv.getNoRepetido();
-			while (aux != null && aux.getInfo() != null) {
-				vet[n[0]] = aux.getInfo();
-				n[0]++;
-				aux = aux.getNoRepetido();
-			}
 			vet = FazCamCentral(arv.getDir(), vet, n);
 
 		}
