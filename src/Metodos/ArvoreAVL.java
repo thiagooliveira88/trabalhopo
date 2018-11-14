@@ -3,39 +3,40 @@ package Metodos;
 import Objetos.Promissoria;
 
 public class ArvoreAVL {
-	private  NodoAVL raiz;
-	private  boolean h;
+	private NodoAVL raiz;
+	private boolean h;
 
 	public ArvoreAVL() {
 		raiz = null;
 		h = true;
 	}
 
-	public  void insereRaiz(Promissoria elem) {
+	public void insereRaiz(Promissoria elem) {
 		raiz = insere(elem, raiz);
 	}
 
-	private  NodoAVL insere(Promissoria elem, NodoAVL no) {
+	private NodoAVL insere(Promissoria elem, NodoAVL no) {
 		if (no == null) {
 			NodoAVL novo = new NodoAVL(elem);
 			h = true;
 			return novo;
 		} else {
 
-			if (elem.getdataVenc() == no.getInfo().getdataVenc()) {
-
-				// se for igual, vou caminhando até o no nulo para inserir o
-				// elemento.
-				NodoAVL temp = no;
-				while (temp.getNoRepetido() != null) {
-					temp = temp.getNoRepetido();
-				}
-				// se chegou até aqui, quer dizer que o NoRepetido esta nulo
-				// insiro o elemento repetido.
-				temp.setNoRepetido(new NodoAVL(elem));
-				return no;
-
-			} else if (elem.getdataVenc() < no.getInfo().getdataVenc()) {
+//			if (elem.getdataVenc() == no.getInfo().getdataVenc()) {
+//
+//				// se for igual, vou caminhando até o no nulo para inserir o
+//				// elemento.
+//				NodoAVL temp = no;
+//				while (temp.getNoRepetido() != null) {
+//					temp = temp.getNoRepetido();
+//				}
+//				// se chegou até aqui, quer dizer que o NoRepetido esta nulo
+//				// insiro o elemento repetido.
+//				temp.setNoRepetido(new NodoAVL(elem));
+//				return no;
+//
+//			} else
+			if (elem.getdataVenc() < no.getInfo().getdataVenc()) {
 				// Insere à esquerda e verifica se precisa balancear à direita
 				no.setEsq(insere(elem, no.getEsq()));
 				no = balancearDir(no);
@@ -49,7 +50,7 @@ public class ArvoreAVL {
 		}
 	}
 
-	private  NodoAVL balancearDir(NodoAVL no) {
+	private NodoAVL balancearDir(NodoAVL no) {
 		if (h)
 			switch (no.getFatorBalanceamento()) {
 			case 1:
@@ -65,7 +66,7 @@ public class ArvoreAVL {
 		return no;
 	}
 
-	private  NodoAVL balancearEsq(NodoAVL no) {
+	private NodoAVL balancearEsq(NodoAVL no) {
 		if (h)
 			switch (no.getFatorBalanceamento()) {
 			case -1:
@@ -81,7 +82,7 @@ public class ArvoreAVL {
 		return no;
 	}
 
-	private  NodoAVL rotaçãoDireita(NodoAVL no) {
+	private NodoAVL rotaçãoDireita(NodoAVL no) {
 		NodoAVL temp1, temp2;
 		temp1 = no.getEsq();
 		if (temp1.getFatorBalanceamento() == -1) {
@@ -110,7 +111,7 @@ public class ArvoreAVL {
 		return no;
 	}
 
-	private  NodoAVL rotaçãoEsquerda(NodoAVL no) {
+	private NodoAVL rotaçãoEsquerda(NodoAVL no) {
 		NodoAVL temp1, temp2;
 		temp1 = no.getDir();
 		if (temp1.getFatorBalanceamento() == 1) {
@@ -138,8 +139,8 @@ public class ArvoreAVL {
 		h = false;
 		return no;
 	}
-	
-	private  NodoAVL pesquisarData(int dataVenc) {
+
+	private NodoAVL pesquisarData(int dataVenc) {
 
 		NodoAVL noPesquisa = pesquisar(dataVenc, raiz);
 
@@ -150,25 +151,30 @@ public class ArvoreAVL {
 
 	}
 
-	public  String obterPesquisaString(int data) {
+	public String obterPesquisaString(int data) {
 
 		NodoAVL noData = pesquisarData(data);
 		String concatData = "";
 
 		if (noData != null) {
-			while (noData != null && noData.getInfo() != null) {
-				Promissoria info = noData.getInfo();
-
-				concatData += UsoGeral.converterIntToString(info.getdataVenc()) + ";" + info.getNome() + ";"
-						+ info.getCpf() + ";" + info.getValor() + ";" + info.getPaga() + ",";
-
-				noData = noData.getNoRepetido();
-			}
+//			while (noData != null && noData.getInfo() != null) {
+//				Promissoria info = noData.getInfo();
+//
+//				concatData += UsoGeral.converterIntToString(info.getdataVenc()) + ";" + info.getNome() + ";"
+//						+ info.getCpf() + ";" + info.getValor() + ";" + info.getPaga() + ",";
+//
+//				noData = noData.getNoRepetido();
+//			}
+			
+			Promissoria info = noData.getInfo();
+			concatData += UsoGeral.converterIntToString(info.getdataVenc()) + ";" + info.getNome() + ";"
+					+ info.getCpf() + ";" + info.getValor() + ";" + info.getPaga() + ",";
 		}
+		
 		return concatData;
 	}
 
-	private  NodoAVL pesquisar(int dataVenc, NodoAVL no) {
+	private NodoAVL pesquisar(int dataVenc, NodoAVL no) {
 		if (no != null) {
 			if (dataVenc < no.getInfo().getdataVenc()) {
 				no = pesquisar(dataVenc, no.getEsq());
@@ -179,6 +185,11 @@ public class ArvoreAVL {
 			}
 		}
 		return no;
+	}
+
+	public void reiniciarAVL() {
+		raiz = null;
+		h = true;
 	}
 
 }

@@ -1,13 +1,11 @@
 PAGAS:
 26/05/1982;502.83;ANA BEATRIZ LIMA MACHADO VARGAS
-26/05/1982;685.75;MELISSA GUSMAO CARVALHO ALVES
 
 NÃO PAGAS:
 
 TOTAL NÃO PAGA: 0.0
 ========================================================================
 PAGAS:
-08/03/2027;677.37;ALAN ROMAO DIAS
 
 NÃO PAGAS:
 08/03/2027;1995.03;MARIO VILELA
@@ -30,7 +28,6 @@ TOTAL NÃO PAGA: 0.0
 ========================================================================
 PAGAS:
 11/03/1975;1677.77;ANA BEATRIZ CAVALCANTE GALVAO
-11/03/1975;1511.35;LILIAN CAMILO MOURA
 
 NÃO PAGAS:
 
@@ -54,9 +51,8 @@ PAGAS:
 
 NÃO PAGAS:
 27/01/2049;901.98;ELIANA PRATES DOS SANTOS ABREU
-27/01/2049;1195.63;TADEU MARTINHO
 
-TOTAL NÃO PAGA: 2097.61
+TOTAL NÃO PAGA: 901.98
 ========================================================================
 PAGAS:
 15/05/1978;510.38;ANTONIO LOPES MAIA
@@ -69,9 +65,8 @@ PAGAS:
 
 NÃO PAGAS:
 30/12/2030;459.79;MARIA DA GRACA DOS SANTOS REZENDE
-30/12/2030;903.67;DIANA VILELA
 
-TOTAL NÃO PAGA: 1363.46
+TOTAL NÃO PAGA: 459.79
 ========================================================================
 PAGAS:
 01/08/1966;738.0;AMANDA MARTINHO SA CASTRO
@@ -82,14 +77,12 @@ TOTAL NÃO PAGA: 0.0
 ========================================================================
 PAGAS:
 03/05/1988;1036.2;MELINA COSME
-03/05/1988;1985.38;ISABEL GUERRA CONCEICAO
 
 NÃO PAGAS:
 
 TOTAL NÃO PAGA: 0.0
 ========================================================================
 PAGAS:
-25/04/2020;1768.09;ADILSON ALVES COSME
 
 NÃO PAGAS:
 25/04/2020;1066.59;MARIANA NASCIMENTO VIANNA ALVES
@@ -98,8 +91,6 @@ TOTAL NÃO PAGA: 1066.59
 ========================================================================
 PAGAS:
 06/09/1962;1638.49;FABIANO MORAES
-06/09/1962;1516.79;MIRIAN VIEIRA COELHO
-06/09/1962;1920.38;MARCOS LIMA CUNHA TELLES
 
 NÃO PAGAS:
 
@@ -158,17 +149,15 @@ PAGAS:
 29/01/2029;1146.39;ANA BEATRIZ MELLO SARMENTO VIANNA
 
 NÃO PAGAS:
-29/01/2029;646.54;MARCOS SOUZA ROCHA
 
-TOTAL NÃO PAGA: 646.54
+TOTAL NÃO PAGA: 0.0
 ========================================================================
 PAGAS:
 
 NÃO PAGAS:
 24/07/2050;1615.47;DAVI GALVAO DE SOUZA
-24/07/2050;1153.32;NILTON COSME
 
-TOTAL NÃO PAGA: 2768.79
+TOTAL NÃO PAGA: 1615.47
 ========================================================================
 PAGAS:
 
@@ -186,7 +175,6 @@ TOTAL NÃO PAGA: 0.0
 ========================================================================
 PAGAS:
 01/07/2041;1511.57;ROBERTA GUERRA OLIVEIRA
-01/07/2041;1473.29;ALESSANDRA TELLES
 
 NÃO PAGAS:
 
@@ -201,7 +189,6 @@ TOTAL NÃO PAGA: 308.0
 ========================================================================
 PAGAS:
 03/06/2002;794.57;ROBERTA CAVALCANTE FERREIRA MARTINS
-03/06/2002;1799.19;JOANA TELLES MAIA
 
 NÃO PAGAS:
 

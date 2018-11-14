@@ -10,6 +10,9 @@ public class NodoAVL {
 	NodoAVL(Promissoria promissoria) {
 		this.info = promissoria;
 		this.fatorBalanceamento = 0;
+		this.esq = null;
+		this.dir = null;
+		this.noRepetido = null;
 	}
 
 	public NodoAVL getDir() {

@@ -18,7 +18,6 @@ import Utils.SuporteArquivo;
 public class Principal {
 	private static String pathAPP = System.getProperty("user.dir");
 	private static String pathArq = pathAPP + "\\ArquivosTrab\\";
-
 	public static void main(String[] args) {
 
 		// crio um LinkedHashMap com o nome do arquivo a ser lido e com o
@@ -42,7 +41,6 @@ public class Principal {
 		nomeArqs.put("promissoria30000ord", 30000);
 
 		// int valor = SuporteArquivo.converterStringToInt("13/11/2018");
-
 		Promissoria[] vetPromissoria = null;
 		int[] datas = null;
 		long inicioExec = 0, fimExec = 0;
@@ -132,62 +130,62 @@ public class Principal {
 			// =====ARVORE BINÁRIA DE
 			// BUSCA===============================================
 
-			inicioExec = System.currentTimeMillis();
-			// ArvoreBinaria
-			// leio o arquivo e atribuo o resultado para o vetor de promissoria
-			vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
-			ABB arvoreBinaria = null;
-			for (int i = 0; i < 4; i++) {
-				arvoreBinaria = new ABB();
-				// insiro os registros no método ArvoreBinaria
-				for (int j = 0; j < vetPromissoria.length; j++) {
-					arvoreBinaria.inserir(vetPromissoria[j]);
-				}
-
-				// ordeno a ArvoreBinaria
-				NoArv[] vetOrdenado = arvoreBinaria.CamCentral(nomeArqs.get(arquivo));
-
-				// balancear a ArvoreBinaria
-				arvoreBinaria.ArvoreBalanceada(vetOrdenado);
-
-				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ArvoreBinariaResultadoPesquisa"
-						+ arquivo + ".txt";
-
-				String resultadoPesquisa = "";
-				String datasEncontradas = "";
-				String datasNaoEncontradas = "";
-				// realizo a pesquisa para cada data
-				for (int j = 0; j < datas.length; j++) {
-					resultadoPesquisa = arvoreBinaria.obterPesquisaString(datas[j]);
-					if (resultadoPesquisa != "") {
-						datasEncontradas += resultadoPesquisa;
-					} else {
-
-						datasNaoEncontradas += UsoGeral.converterIntToString(datas[j]) + "\n";
-					}
-				}
-
-				SuporteArquivo.escreverResultadoPesquisa(datasEncontradas, datasNaoEncontradas, caminhoResultado);
-			}
-
-			fimExec = System.currentTimeMillis();
-			System.out.println("ArvoreBinaria " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
+//			inicioExec = System.currentTimeMillis();
+//			// ArvoreBinaria
+//			// leio o arquivo e atribuo o resultado para o vetor de promissoria
+//			vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
+//			ABB arvoreBinaria = null;
+//			for (int i = 0; i < 4; i++) {
+//				arvoreBinaria = new ABB();
+//				// insiro os registros no método ArvoreBinaria
+//				for (int j = 0; j < vetPromissoria.length; j++) {
+//					arvoreBinaria.inserir(vetPromissoria[j]);
+//				}
+//
+//				// ordeno a ArvoreBinaria
+//				NoArv[] vetOrdenado = arvoreBinaria.CamCentral(nomeArqs.get(arquivo));
+//
+//				// balancear a ArvoreBinaria
+//				arvoreBinaria.ArvoreBalanceada(vetOrdenado);
+//
+//				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ArvoreBinariaResultadoPesquisa"
+//						+ arquivo + ".txt";
+//
+//				String resultadoPesquisa = "";
+//				String datasEncontradas = "";
+//				String datasNaoEncontradas = "";
+//				// realizo a pesquisa para cada data
+//				for (int j = 0; j < datas.length; j++) {
+//					resultadoPesquisa = arvoreBinaria.obterPesquisaString(datas[j]);
+//					if (resultadoPesquisa != "") {
+//						datasEncontradas += resultadoPesquisa;
+//					} else {
+//
+//						datasNaoEncontradas += UsoGeral.converterIntToString(datas[j]) + "\n";
+//					}
+//				}
+//
+//				SuporteArquivo.escreverResultadoPesquisa(datasEncontradas, datasNaoEncontradas, caminhoResultado);
+//			}
+//
+//			fimExec = System.currentTimeMillis();
+//			System.out.println("ArvoreBinaria " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
 
 			// ======================================ARVORE
 			// AVL===============================================
 
 			inicioExec = System.currentTimeMillis();
-			// ARVORE AVL
-			ArvoreAVL avl = null;
+			// ARVORE AVL			
 			int tamanhoVet = nomeArqs.get(arquivo);
 			vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", tamanhoVet);
+			
 			for (int i = 0; i < 4; i++) {
-				avl = new ArvoreAVL();
-				// leio o arquivo e atribuo o resultado para o vetor de
-				// promissoria
+				
+				ArvoreAVL arvoreAVL  = new ArvoreAVL();
+				
 				// insiro os registros no método ARVORE AVL
 				for (int j = 0; j < vetPromissoria.length; j++) {
-					avl.insereRaiz(vetPromissoria[j]);
+					arvoreAVL.insereRaiz(vetPromissoria[j]);
 				}
 
 				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ArvoreAVLResultadoPesquisa"
@@ -198,7 +196,7 @@ public class Principal {
 				String datasNaoEncontradas = "";
 				// realizo a pesquisa para cada data
 				for (int j = 0; j < datas.length; j++) {
-					resultadoPesquisa = avl.obterPesquisaString(datas[j]);
+					resultadoPesquisa = arvoreAVL.obterPesquisaString(datas[j]);
 					if (resultadoPesquisa != "") {
 						datasEncontradas += resultadoPesquisa;
 					} else {
@@ -206,14 +204,12 @@ public class Principal {
 						datasNaoEncontradas += UsoGeral.converterIntToString(datas[j]) + "\n";
 					}
 				}
-
+	
 				SuporteArquivo.escreverResultadoPesquisa(datasEncontradas, datasNaoEncontradas, caminhoResultado);
-
 			}
-
 			fimExec = System.currentTimeMillis();
-			System.out.println("ArvoreAVL " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
-
+			System.out.println("ArvoreAVL " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");			
+			
 			// =====================HASHING COM ENCADEAMENTO=============
 
 			// inicioExec = System.currentTimeMillis();
