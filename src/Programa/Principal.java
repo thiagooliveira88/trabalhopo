@@ -21,7 +21,8 @@ public class Principal {
 
 	public static void main(String[] args) {
 
-		// crio um LinkedHashMap com o nome do arquivo a ser lido e com o tamanho do
+		// crio um LinkedHashMap com o nome do arquivo a ser lido e com o
+		// tamanho do
 		// vetor.
 		LinkedHashMap<String, Integer> nomeArqs = new LinkedHashMap<String, Integer>();
 		nomeArqs.put("promissoria500alea", 500);
@@ -40,187 +41,223 @@ public class Principal {
 		nomeArqs.put("promissoria30000inv", 30000);
 		nomeArqs.put("promissoria30000ord", 30000);
 
+		// int valor = SuporteArquivo.converterStringToInt("13/11/2018");
+
 		Promissoria[] vetPromissoria = null;
-		Date[] datas = null;
+		int[] datas = null;
 		long inicioExec = 0, fimExec = 0;
 		// pego as datas para a memória, pois será usado até o fim do programa
 		datas = SuporteArquivo.obterDatasParaPesquisa(pathArq + "data.txt", 400);
 		/*
-		 * percorro todo o LinkedHashMap(Dictonary) o método Keyset retorna as chaves de
-		 * pesquisa, que no caso são os nomes dos arquivos, assim consigo pegar o nome
-		 * do arquivo e o tamanho do vetor.
+		 * percorro todo o LinkedHashMap(Dictonary) o método Keyset retorna as
+		 * chaves de pesquisa, que no caso são os nomes dos arquivos, assim
+		 * consigo pegar o nome do arquivo e o tamanho do vetor.
 		 */
 		for (String arquivo : nomeArqs.keySet()) {
 
 			// =================HEAPSORT + PESQUISA BINÁRIA================
-//			inicioExec = System.currentTimeMillis();
-//			// faço o processo 5 vezes
-//			// HeapSort + Pesquisa binária
-//			for (int i = 0; i < 1; i++) {
-//
-//				// leio o arquivo e atribuo o resultado para o vetor de promissoria
-//				vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
-//				// executo o método HeapSort
-//				Heapsort.executarHeapSort(vetPromissoria);
-//				// defino o caminho e nome do arquivo que será salvo em disco.
-//				String caminhoArq = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\HeapSort" + arquivo + ".txt";
-//				// escrevo no arquivo
-//				SuporteArquivo.escreverArquivo(vetPromissoria, caminhoArq);
-//				// realizo a pesquisa para cada data e adiciono em um vetor os indices
-//				// encontrados
-//				int[] vetIndices = new int[datas.length];
-//				for (int j = 0; j < datas.length; j++) {
-//					vetIndices[j] = UsoGeral.pesquisaBinaria(datas[j], vetPromissoria);
-//				}
-//				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\HeapSortResultadoPesquisa"
-//						+ arquivo + ".txt";
-//				SuporteArquivo.escreverResultadoPesquisa(vetIndices, datas, vetPromissoria, caminhoResultado);
-//			}
-//
-//			fimExec = System.currentTimeMillis();
-//
-//			System.out.println("HeapSort " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
-//
-//			// =========QUICKSORT + PESQUISA BINÁRIA==========================
-//
-//			inicioExec = System.currentTimeMillis();
-//			// QuickSort + Pesquisa binária
-//			for (int i = 0; i < 4; i++) {
-//
-//				// leio o arquivo e atribuo o resultado para o vetor de promissoria
-//				vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
-//				// executo o método QuickSort
-//				QuickSort.executarQuickSort(vetPromissoria);
-//				// defino o caminho e nome do arquivo que será salvo em disco.
-//				String caminhoArq = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\Quicksort" + arquivo + ".txt";
-//				// escrevo no arquivo
-//				SuporteArquivo.escreverArquivo(vetPromissoria, caminhoArq);
-//				// realizo a pesquisa para cada data e adiciono em um vetor os indices
-//				// encontrados
-//				int[] vetIndices = new int[datas.length];
-//				for (int j = 0; j < datas.length; j++) {
-//					vetIndices[j] = UsoGeral.pesquisaBinaria(datas[j], vetPromissoria);
-//				}
-//				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\QuicksortResultadoPesquisa"
-//						+ arquivo + ".txt";
-//				SuporteArquivo.escreverResultadoPesquisa(vetIndices, datas, vetPromissoria, caminhoResultado);
-//			}
-//
-//			fimExec = System.currentTimeMillis();
-//			System.out.println("Quicksort " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
+			// inicioExec = System.currentTimeMillis();
+			// // faço o processo 5 vezes
+			// // HeapSort + Pesquisa binária
+			// for (int i = 0; i < 1; i++) {
+			//
+			// // leio o arquivo e atribuo o resultado para o vetor de
+			// promissoria
+			// vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo +
+			// ".txt", nomeArqs.get(arquivo));
+			// // executo o método HeapSort
+			// Heapsort.executarHeapSort(vetPromissoria);
+			// // defino o caminho e nome do arquivo que será salvo em disco.
+			// String caminhoArq = pathAPP +
+			// "\\ArquivosTrab\\ArquivosGerados\\HeapSort" + arquivo + ".txt";
+			// // escrevo no arquivo
+			// SuporteArquivo.escreverArquivo(vetPromissoria, caminhoArq);
+			// // realizo a pesquisa para cada data e adiciono em um vetor os
+			// indices
+			// // encontrados
+			// int[] vetIndices = new int[datas.length];
+			// for (int j = 0; j < datas.length; j++) {
+			// vetIndices[j] = UsoGeral.pesquisaBinaria(datas[j],
+			// vetPromissoria);
+			// }
+			// String caminhoResultado = pathAPP +
+			// "\\ArquivosTrab\\ArquivosGerados\\HeapSortResultadoPesquisa"
+			// + arquivo + ".txt";
+			// SuporteArquivo.escreverResultadoPesquisa(vetIndices, datas,
+			// vetPromissoria, caminhoResultado);
+			// }
+			//
+			// fimExec = System.currentTimeMillis();
+			//
+			// System.out.println("HeapSort " + arquivo + " = " + ((fimExec -
+			// inicioExec) / 5) + " milissegundos");
+			//
+			// // =========QUICKSORT + PESQUISA
+			// BINÁRIA==========================
+			//
+			// inicioExec = System.currentTimeMillis();
+			// // QuickSort + Pesquisa binária
+			// for (int i = 0; i < 4; i++) {
+			//
+			// // leio o arquivo e atribuo o resultado para o vetor de
+			// promissoria
+			// vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo +
+			// ".txt", nomeArqs.get(arquivo));
+			// // executo o método QuickSort
+			// QuickSort.executarQuickSort(vetPromissoria);
+			// // defino o caminho e nome do arquivo que será salvo em disco.
+			// String caminhoArq = pathAPP +
+			// "\\ArquivosTrab\\ArquivosGerados\\Quicksort" + arquivo + ".txt";
+			// // escrevo no arquivo
+			// SuporteArquivo.escreverArquivo(vetPromissoria, caminhoArq);
+			// // realizo a pesquisa para cada data e adiciono em um vetor os
+			// indices
+			// // encontrados
+			// int[] vetIndices = new int[datas.length];
+			// for (int j = 0; j < datas.length; j++) {
+			// vetIndices[j] = UsoGeral.pesquisaBinaria(datas[j],
+			// vetPromissoria);
+			// }
+			// String caminhoResultado = pathAPP +
+			// "\\ArquivosTrab\\ArquivosGerados\\QuicksortResultadoPesquisa"
+			// + arquivo + ".txt";
+			// SuporteArquivo.escreverResultadoPesquisa(vetIndices, datas,
+			// vetPromissoria, caminhoResultado);
+			// }
+			//
+			// fimExec = System.currentTimeMillis();
+			// System.out.println("Quicksort " + arquivo + " = " + ((fimExec -
+			// inicioExec) / 5) + " milissegundos");
 
-			// =====ARVORE BINÁRIA DE BUSCA===============================================
+			// =====ARVORE BINÁRIA DE
+			// BUSCA===============================================
 
 			inicioExec = System.currentTimeMillis();
 			// ArvoreBinaria
 			// leio o arquivo e atribuo o resultado para o vetor de promissoria
 			vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
+			ABB arvoreBinaria = null;
 			for (int i = 0; i < 4; i++) {
-
+				arvoreBinaria = new ABB();
 				// insiro os registros no método ArvoreBinaria
 				for (int j = 0; j < vetPromissoria.length; j++) {
-					ABB.inserir(vetPromissoria[j]);
+					arvoreBinaria.inserir(vetPromissoria[j]);
 				}
 
 				// ordeno a ArvoreBinaria
-				NoArv[] vetOrdenado = ABB.CamCentral(nomeArqs.get(arquivo));
+				NoArv[] vetOrdenado = arvoreBinaria.CamCentral(nomeArqs.get(arquivo));
 
 				// balancear a ArvoreBinaria
-				ABB novaABB = ABB.ArvoreBalanceada(vetOrdenado);
+				arvoreBinaria.ArvoreBalanceada(vetOrdenado);
 
 				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ArvoreBinariaResultadoPesquisa"
-						+ arquivo + ".txt";		
-				
-				
-				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+						+ arquivo + ".txt";
+
 				String resultadoPesquisa = "";
 				String datasEncontradas = "";
 				String datasNaoEncontradas = "";
 				// realizo a pesquisa para cada data
 				for (int j = 0; j < datas.length; j++) {
-					 resultadoPesquisa = novaABB.obterPesquisaString(datas[j]);
+					resultadoPesquisa = arvoreBinaria.obterPesquisaString(datas[j]);
 					if (resultadoPesquisa != "") {
 						datasEncontradas += resultadoPesquisa;
 					} else {
 
-						datasNaoEncontradas += formatter.format(datas[j]) + "\n";
+						datasNaoEncontradas += UsoGeral.converterIntToString(datas[j]) + "\n";
 					}
 				}
-				
+
 				SuporteArquivo.escreverResultadoPesquisa(datasEncontradas, datasNaoEncontradas, caminhoResultado);
 			}
 
 			fimExec = System.currentTimeMillis();
 			System.out.println("ArvoreBinaria " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
-//
-//			// ======================================ARVORE
-//			// AVL===============================================
-//
-//			inicioExec = System.currentTimeMillis();
-//			// ARVORE AVL
-//
-//			int tamanhoVet = nomeArqs.get(arquivo);
-//			vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", tamanhoVet);
-//			for (int i = 0; i < 4; i++) {
-//
-//				// leio o arquivo e atribuo o resultado para o vetor de promissoria
-//				// insiro os registros no método ARVORE AVL
-//				for (int j = 0; j < vetPromissoria.length; j++) {
-//					ArvoreAVL.insereRaiz(vetPromissoria[j]);
-//				}
-//
-//				// ordeno a ARVORE AVL
-//				int[] vetIndices = new int[datas.length];
-//				for (int j = 0; j < datas.length; j++) {
-//					vetIndices[j] = UsoGeral.pesquisaBinaria(datas[j], vetPromissoria);
-//				}
-//				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ArvoreAVLResultadoPesquisa"
-//						+ arquivo + ".txt";
-//				SuporteArquivo.escreverResultadoPesquisa(vetIndices, datas, vetPromissoria, caminhoResultado);
-//			}
-//
-//			fimExec = System.currentTimeMillis();
-//			System.out.println("ArvoreAVL " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
+
+			// ======================================ARVORE
+			// AVL===============================================
+
+			inicioExec = System.currentTimeMillis();
+			// ARVORE AVL
+			ArvoreAVL avl = null;
+			int tamanhoVet = nomeArqs.get(arquivo);
+			vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", tamanhoVet);
+			for (int i = 0; i < 4; i++) {
+				avl = new ArvoreAVL();
+				// leio o arquivo e atribuo o resultado para o vetor de
+				// promissoria
+				// insiro os registros no método ARVORE AVL
+				for (int j = 0; j < vetPromissoria.length; j++) {
+					avl.insereRaiz(vetPromissoria[j]);
+				}
+
+				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\ArvoreAVLResultadoPesquisa"
+						+ arquivo + ".txt";
+
+				String resultadoPesquisa = "";
+				String datasEncontradas = "";
+				String datasNaoEncontradas = "";
+				// realizo a pesquisa para cada data
+				for (int j = 0; j < datas.length; j++) {
+					resultadoPesquisa = avl.obterPesquisaString(datas[j]);
+					if (resultadoPesquisa != "") {
+						datasEncontradas += resultadoPesquisa;
+					} else {
+
+						datasNaoEncontradas += UsoGeral.converterIntToString(datas[j]) + "\n";
+					}
+				}
+
+				SuporteArquivo.escreverResultadoPesquisa(datasEncontradas, datasNaoEncontradas, caminhoResultado);
+
+			}
+
+			fimExec = System.currentTimeMillis();
+			System.out.println("ArvoreAVL " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
 
 			// =====================HASHING COM ENCADEAMENTO=============
 
-//			inicioExec = System.currentTimeMillis();
-//			// Hashing com encadeamento
-//			HashingEncadeado hashingEncad = null;
-//
-//			// leio o arquivo e atribuo o resultado para o vetor de promissoria
-//			vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
-//			
-//			for (int i = 0; i < 4; i++) {
-//				 hashingEncad = new HashingEncadeado(nomeArqs.get(arquivo));
-//				
-//				// insiro os registros
-//				for (int j = 0; j < vetPromissoria.length; j++) {
-//					hashingEncad.inserir(vetPromissoria[j]);
-//				}
-//
-//				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-//				String caminhoResultado = pathAPP + "\\ArquivosTrab\\ArquivosGerados\\HashingResultadoPesquisa"
-//						+ arquivo + ".txt";
-//				String resultadoPesquisa = "";
-//				String datasEncontradas = "";
-//				String datasNaoEncontradas = "";
-//				// realizo a pesquisa para cada data
-//				for (int j = 0; j < datas.length; j++) {
-//					resultadoPesquisa = hashingEncad.pesquisar(datas[j]);
-//					if (resultadoPesquisa != "") {
-//						datasEncontradas += resultadoPesquisa;
-//					} else {
-//
-//						datasNaoEncontradas += formatter.format(datas[j]) + "\n";
-//					}
-//				}
-//
-//				SuporteArquivo.escreverResultadoPesquisa(datasEncontradas, datasNaoEncontradas, caminhoResultado);
-//			}
-//
-//			fimExec = System.currentTimeMillis();
-//			System.out.println("HashingEncadeado " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
+			// inicioExec = System.currentTimeMillis();
+			// // Hashing com encadeamento
+			// HashingEncadeado hashingEncad = null;
+			//
+			// // leio o arquivo e atribuo o resultado para o vetor de
+			// promissoria
+			// vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo +
+			// ".txt", nomeArqs.get(arquivo));
+			//
+			// for (int i = 0; i < 4; i++) {
+			// hashingEncad = new HashingEncadeado(nomeArqs.get(arquivo));
+			//
+			// // insiro os registros
+			// for (int j = 0; j < vetPromissoria.length; j++) {
+			// hashingEncad.inserir(vetPromissoria[j]);
+			// }
+			//
+			// String caminhoResultado = pathAPP +
+			// "\\ArquivosTrab\\ArquivosGerados\\HashingResultadoPesquisa"
+			// + arquivo + ".txt";
+			// String resultadoPesquisa = "";
+			// String datasEncontradas = "";
+			// String datasNaoEncontradas = "";
+			// // realizo a pesquisa para cada data
+			// for (int j = 0; j < datas.length; j++) {
+			// resultadoPesquisa = hashingEncad.pesquisar(datas[j]);
+			// if (resultadoPesquisa != "") {
+			// datasEncontradas += resultadoPesquisa;
+			// } else {
+			//
+			// datasNaoEncontradas += UsoGeral.converterIntToString(datas[j]) +
+			// "\n";
+			// }
+			// }
+			//
+			// SuporteArquivo.escreverResultadoPesquisa(datasEncontradas,
+			// datasNaoEncontradas, caminhoResultado);
+			// }
+			//
+			// fimExec = System.currentTimeMillis();
+			// System.out.println("HashingEncadeado " + arquivo + " = " +
+			// ((fimExec - inicioExec) / 5) + " milissegundos");
 		}
 	}
 

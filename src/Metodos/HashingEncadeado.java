@@ -14,7 +14,7 @@ public class HashingEncadeado {
 
 	public HashingEncadeado(int tam) {
 		// aumenta o tamanho do vetor em 10%
-		tam = (int) (tam * 1.1);
+		tam = this.obterTamanhoVetor(tam);
 		// inicializa o vetor com o tamanho acrescido.
 		this.setVetorH(new ListaSimples[tam]);
 		this.setTamanho(tam);
@@ -47,13 +47,13 @@ public class HashingEncadeado {
 		if (noNovo != null) {
 
 			NoListaSimples temp = noNovo;
-			while (temp.getNoDataRepetida() != null) {
+			while (temp != null && temp.getNoDataRepetida() != null) {
 				temp = temp.getNoDataRepetida();
 			}
 			// se chegou até aqui, quer dizer que o NoRepetido esta nulo
 			// insiro o elemento repetido.
 			temp.setNoDataRepetida(new NoListaSimples(promi));
-			;
+
 		} else {
 
 			int pos = 0;
@@ -63,49 +63,47 @@ public class HashingEncadeado {
 
 	}
 
-	private int obterPosicaoHash(Date data) {
-		int mod = 0;
-		int soma = 0;
-		char carac;
-		for (int i = 0; i < data.toString().length(); i++) {
-
-			carac = data.toString().charAt(i);
-			soma += Character.getNumericValue(carac);
-		}
-
-		switch (this.tamanho) {
-		case 550:
-			mod = (soma % 557);
-			break;
-		case 1100:
-			mod = (soma % 1103);
-			break;
-		case 5500:
-			mod = (soma % 5503);
-			break;
-		case 11000:
-			mod = (soma % 11003);
-			break;
-		case 33000:
-			mod = (soma % 33013);
-			break;
-		}
-		return mod;
+	private int obterPosicaoHash(int data) {
+		return (data % this.tamanho);
 	}
 
-	public String pesquisar(Date data) {
+	private int obterTamanhoVetor(int tam) {
 
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		int tamanhoVet = 0;
+
+		switch (tam) {
+		case 500:
+			tamanhoVet = 557;
+			break;
+		case 1000:
+			tamanhoVet = 1103;
+			break;
+		case 5000:
+			tamanhoVet = 5503;
+			break;
+		case 10000:
+			tamanhoVet = 11003;
+			break;
+		case 30000:
+			tamanhoVet = 33013;
+			break;
+		}
+
+		return tamanhoVet;
+	}
+
+	public String pesquisar(int data) {
+
 		NoListaSimples noData = pesquisaHash(data);
+		
 		String concatData = "";
-		String separadorSplit = ",";
 
 		if (noData != null) {
 			while (noData != null && noData.getInfo() != null) {
 				Promissoria info = noData.getInfo();
 
-				concatData += formatter.format(info.getdataVenc()) + ";" + info.getNome() + ";" + info.getCpf() + ";"
-						+ info.getValor() + ";" + info.getPaga() + separadorSplit;
+				concatData += UsoGeral.converterIntToString(info.getdataVenc()) + ";" + info.getNome() + ";"
+						+ info.getCpf() + ";" + info.getValor() + ";" + info.getPaga() + ",";
 
 				noData = noData.getNoDataRepetida();
 			}
@@ -113,7 +111,7 @@ public class HashingEncadeado {
 		return concatData;
 	}
 
-	private NoListaSimples pesquisaHash(Date data) {
+	private NoListaSimples pesquisaHash(int data) {
 		NoListaSimples aux;
 		int pos = 0;
 		pos = obterPosicaoHash(data);
@@ -122,7 +120,7 @@ public class HashingEncadeado {
 				aux = this.vetorH[pos].getPrim();
 				while (aux != null) {
 
-					if (aux.getInfo().getdataVenc().compareTo(data) == 0) {
+					if (aux.getInfo().getdataVenc() == data) {
 						return aux;
 					} else {
 						aux = aux.getProx();
@@ -131,5 +129,5 @@ public class HashingEncadeado {
 			}
 		}
 		return null;
-	}	
+	}
 }

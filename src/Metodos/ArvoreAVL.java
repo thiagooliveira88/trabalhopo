@@ -3,28 +3,29 @@ package Metodos;
 import Objetos.Promissoria;
 
 public class ArvoreAVL {
-	private static NodoAVL raiz;
-	private static boolean h;
+	private  NodoAVL raiz;
+	private  boolean h;
 
 	public ArvoreAVL() {
 		raiz = null;
-		 h = true;
+		h = true;
 	}
 
-	public static void insereRaiz(Promissoria elem) {
+	public  void insereRaiz(Promissoria elem) {
 		raiz = insere(elem, raiz);
 	}
 
-	private static NodoAVL insere(Promissoria elem, NodoAVL no) {
+	private  NodoAVL insere(Promissoria elem, NodoAVL no) {
 		if (no == null) {
 			NodoAVL novo = new NodoAVL(elem);
-		    h = true;
+			h = true;
 			return novo;
 		} else {
 
-			if (elem.getdataVenc().compareTo(no.getInfo().getdataVenc()) == 0) {
+			if (elem.getdataVenc() == no.getInfo().getdataVenc()) {
 
-				// se for igual, vou caminhando até o no nulo para inserir o elemento.
+				// se for igual, vou caminhando até o no nulo para inserir o
+				// elemento.
 				NodoAVL temp = no;
 				while (temp.getNoRepetido() != null) {
 					temp = temp.getNoRepetido();
@@ -34,7 +35,7 @@ public class ArvoreAVL {
 				temp.setNoRepetido(new NodoAVL(elem));
 				return no;
 
-			} else if (elem.getdataVenc().compareTo(no.getInfo().getdataVenc()) < 0) {
+			} else if (elem.getdataVenc() < no.getInfo().getdataVenc()) {
 				// Insere à esquerda e verifica se precisa balancear à direita
 				no.setEsq(insere(elem, no.getEsq()));
 				no = balancearDir(no);
@@ -48,7 +49,7 @@ public class ArvoreAVL {
 		}
 	}
 
-	private static NodoAVL balancearDir(NodoAVL no) {
+	private  NodoAVL balancearDir(NodoAVL no) {
 		if (h)
 			switch (no.getFatorBalanceamento()) {
 			case 1:
@@ -64,7 +65,7 @@ public class ArvoreAVL {
 		return no;
 	}
 
-	private static NodoAVL balancearEsq(NodoAVL no) {
+	private  NodoAVL balancearEsq(NodoAVL no) {
 		if (h)
 			switch (no.getFatorBalanceamento()) {
 			case -1:
@@ -80,7 +81,7 @@ public class ArvoreAVL {
 		return no;
 	}
 
-	private static NodoAVL rotaçãoDireita(NodoAVL no) {
+	private  NodoAVL rotaçãoDireita(NodoAVL no) {
 		NodoAVL temp1, temp2;
 		temp1 = no.getEsq();
 		if (temp1.getFatorBalanceamento() == -1) {
@@ -109,7 +110,7 @@ public class ArvoreAVL {
 		return no;
 	}
 
-	private static NodoAVL rotaçãoEsquerda(NodoAVL no) {
+	private  NodoAVL rotaçãoEsquerda(NodoAVL no) {
 		NodoAVL temp1, temp2;
 		temp1 = no.getDir();
 		if (temp1.getFatorBalanceamento() == 1) {
@@ -135,6 +136,48 @@ public class ArvoreAVL {
 		}
 		no.setFatorBalanceamento((byte) 0);
 		h = false;
+		return no;
+	}
+	
+	private  NodoAVL pesquisarData(int dataVenc) {
+
+		NodoAVL noPesquisa = pesquisar(dataVenc, raiz);
+
+		if (noPesquisa != null)
+			return noPesquisa;
+
+		return null;
+
+	}
+
+	public  String obterPesquisaString(int data) {
+
+		NodoAVL noData = pesquisarData(data);
+		String concatData = "";
+
+		if (noData != null) {
+			while (noData != null && noData.getInfo() != null) {
+				Promissoria info = noData.getInfo();
+
+				concatData += UsoGeral.converterIntToString(info.getdataVenc()) + ";" + info.getNome() + ";"
+						+ info.getCpf() + ";" + info.getValor() + ";" + info.getPaga() + ",";
+
+				noData = noData.getNoRepetido();
+			}
+		}
+		return concatData;
+	}
+
+	private  NodoAVL pesquisar(int dataVenc, NodoAVL no) {
+		if (no != null) {
+			if (dataVenc < no.getInfo().getdataVenc()) {
+				no = pesquisar(dataVenc, no.getEsq());
+			} else {
+				if (dataVenc > no.getInfo().getdataVenc()) {
+					no = pesquisar(dataVenc, no.getDir());
+				}
+			}
+		}
 		return no;
 	}
 

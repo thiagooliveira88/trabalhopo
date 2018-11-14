@@ -5,19 +5,20 @@ import java.util.Date;
 import Metodos.UsoGeral;
 
 public class Promissoria {
-	private String nome, cpf, valor, paga;
-	private Date dataVenc;
+	private String nome, cpf, valor;
+	private int dataVenc;
+	private boolean paga;
 
 	public String getNome() {
 		return nome;
 	}
 
 	public Promissoria(String dataVenc, String nome, String cpf, String valor, String paga) {
-		this.dataVenc = UsoGeral.obterData(dataVenc);
+		this.dataVenc = UsoGeral.converterStringToInt(dataVenc);
 		this.nome = nome;
 		this.cpf = cpf;
 		this.valor = valor;
-		this.paga = paga;
+		this.paga = Boolean.parseBoolean(paga);
 	}
 
 	public void setNome(String nome) {
@@ -32,11 +33,11 @@ public class Promissoria {
 		this.cpf = cpf;
 	}
 
-	public Date getdataVenc() {
+	public int getdataVenc() {
 		return dataVenc;
 	}
 
-	public void setdataVenc(Date dataVenc) {
+	public void setdataVenc(int dataVenc) {
 		this.dataVenc = dataVenc;
 	}
 
@@ -48,11 +49,11 @@ public class Promissoria {
 		this.valor = valor;
 	}
 
-	public String getPaga() {
+	public boolean getPaga() {
 		return paga;
 	}
 
-	public void setPaga(String paga) {
+	public void setPaga(boolean paga) {
 		this.paga = paga;
 	}
 

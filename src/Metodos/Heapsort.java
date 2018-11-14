@@ -5,11 +5,11 @@ import Objetos.Promissoria;
 public class Heapsort {
 	private static int nElem;
 	private static Promissoria[] vetor;
-	
+
 	public static void executarHeapSort(Promissoria[] pro) {
 		vetor = pro;
 		nElem = pro.length - 1;
-		
+
 		int dir = nElem;
 		int esq = (dir - 1) / 2;
 		Promissoria temp;
@@ -35,9 +35,9 @@ public class Heapsort {
 
 		while ((mF <= dir) && (!heap)) {
 			if (mF < dir)
-				if (vetor[mF].getdataVenc().compareTo(vetor[mF + 1].getdataVenc()) < 0)
+				if (vetor[mF].getdataVenc() < vetor[mF + 1].getdataVenc())
 					mF++;
-			if (raiz.getdataVenc().compareTo(vetor[mF].getdataVenc()) < 0) {
+			if (raiz.getdataVenc() < vetor[mF].getdataVenc()) {
 				vetor[i] = vetor[mF];
 				i = mF;
 				mF = 2 * i + 1;

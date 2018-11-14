@@ -22,9 +22,9 @@ public class QuickSort {
 		pivo = vetor[(i + j) / 2];
 
 		do {
-			while (vetor[i].getdataVenc().compareTo(pivo.getdataVenc()) < 0)
+			while (vetor[i].getdataVenc() < (pivo.getdataVenc()))
 				i++;
-			while (vetor[j].getdataVenc().compareTo(pivo.getdataVenc()) > 0)
+			while (vetor[j].getdataVenc() > pivo.getdataVenc())
 				j--;
 			if (i <= j) {
 				temp = vetor[i];

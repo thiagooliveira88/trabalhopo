@@ -1,13 +1,10 @@
 package Metodos;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import Objetos.Promissoria;
 
 public class ABB {
-	private static NoArv raiz;
-	private static int quantNos;
+	private NoArv raiz;
+	private int quantNos;
 
 	public ABB() {
 		quantNos = 0;
@@ -26,8 +23,9 @@ public class ABB {
 		return quantNos;
 	}
 
-	public static boolean inserir(Promissoria elem) {
-		// se o retorno for verdadeiro, quer dizer uma data igual já foi inserida na
+	public boolean inserir(Promissoria elem) {
+		// se o retorno for verdadeiro, quer dizer uma data igual já foi
+		// inserida na
 		// arvore
 		if (pesquisar(elem.getdataVenc())) {
 			// adiciono o elemento repetido
@@ -40,15 +38,16 @@ public class ABB {
 		}
 	}
 
-	private static NoArv inserir(Promissoria elem, NoArv no) {
+	private NoArv inserir(Promissoria elem, NoArv no) {
 		if (no == null) {
 			NoArv novo = new NoArv(elem);
 			return novo;
 		} else {
 
-			if (elem.getdataVenc().compareTo(no.getInfo().getdataVenc()) == 0) {
+			if (elem.getdataVenc() == no.getInfo().getdataVenc()) {
 
-				// se for igual, vou caminhando até o no nulo para inserir o elemento.
+				// se for igual, vou caminhando até o no nulo para inserir o
+				// elemento.
 				NoArv temp = no;
 				while (temp.getNoRepetido() != null) {
 					temp = temp.getNoRepetido();
@@ -58,7 +57,7 @@ public class ABB {
 				temp.setNoRepetido(new NoArv(elem));
 
 				return no;
-			} else if (elem.getdataVenc().compareTo(no.getInfo().getdataVenc()) < 0) {
+			} else if (elem.getdataVenc() < no.getInfo().getdataVenc()) {
 				no.setEsq(inserir(elem, no.getEsq()));
 				return no;
 			} else {
@@ -68,7 +67,7 @@ public class ABB {
 		}
 	}
 
-	public static boolean pesquisar(Date dataVenc) {
+	public boolean pesquisar(int dataVenc) {
 		if (pesquisar(dataVenc, raiz) != null) {
 			return true;
 		} else {
@@ -76,7 +75,7 @@ public class ABB {
 		}
 	}
 
-	private static NoArv pesquisarData(Date dataVenc) {
+	private NoArv pesquisarData(int dataVenc) {
 
 		NoArv noPesquisa = pesquisar(dataVenc, raiz);
 
@@ -87,19 +86,17 @@ public class ABB {
 
 	}
 
-	public static String obterPesquisaString(Date data) {
+	public String obterPesquisaString(int data) {
 
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		NoArv noData = pesquisarData(data);
 		String concatData = "";
-		String separadorSplit = ",";
 
 		if (noData != null) {
 			while (noData != null && noData.getInfo() != null) {
 				Promissoria info = noData.getInfo();
 
-				concatData += formatter.format(info.getdataVenc()) + ";" + info.getNome() + ";" + info.getCpf() + ";"
-						+ info.getValor() + ";" + info.getPaga() + separadorSplit;
+				concatData += UsoGeral.converterIntToString(info.getdataVenc()) + ";" + info.getNome() + ";"
+						+ info.getCpf() + ";" + info.getValor() + ";" + info.getPaga() + ",";
 
 				noData = noData.getNoRepetido();
 			}
@@ -107,12 +104,12 @@ public class ABB {
 		return concatData;
 	}
 
-	private static NoArv pesquisar(Date dataVenc, NoArv no) {
+	private NoArv pesquisar(int dataVenc, NoArv no) {
 		if (no != null) {
-			if (dataVenc.compareTo(no.getInfo().getdataVenc()) < 0) {
+			if (dataVenc < no.getInfo().getdataVenc()) {
 				no = pesquisar(dataVenc, no.getEsq());
 			} else {
-				if (dataVenc.compareTo(no.getInfo().getdataVenc()) > 0) {
+				if (dataVenc > no.getInfo().getdataVenc()) {
 					no = pesquisar(dataVenc, no.getDir());
 				}
 			}
@@ -120,7 +117,7 @@ public class ABB {
 		return no;
 	}
 
-	public static NoArv[] CamCentral(int tamanhoVet) {
+	public NoArv[] CamCentral(int tamanhoVet) {
 		int[] n = new int[1];
 		n[0] = 0;
 
@@ -134,7 +131,7 @@ public class ABB {
 		return vetor;
 	}
 
-	private static NoArv[] FazCamCentral(NoArv arv, NoArv[] vet, int[] n) {
+	private NoArv[] FazCamCentral(NoArv arv, NoArv[] vet, int[] n) {
 		if (arv != null) {
 
 			vet = FazCamCentral(arv.getEsq(), vet, n);
@@ -146,17 +143,23 @@ public class ABB {
 		return vet;
 	}
 
-	public static ABB ArvoreBalanceada(NoArv[] vetOrdenado) {
-		ABB temp = new ABB();
+	public ABB ArvoreBalanceada(NoArv[] vetOrdenado) {
+		ABB temp = this;
 		Balancear(vetOrdenado, temp, 0, vetOrdenado.length - 1);
 		return temp;
 	}
 
-	private static void Balancear(NoArv[] vet, ABB temp, int inic, int fim) {
+	private void Balancear(NoArv[] vet, ABB temp, int inic, int fim) {
 		int meio;
 		if (fim >= inic) {
 			meio = (inic + fim) / 2;
-			temp.inserir(vet[meio].getInfo());
+
+			NoArv aux = vet[meio];
+			while (aux!=null && aux.getInfo() != null) {
+				temp.inserir(aux.getInfo());
+				aux = aux.getNoRepetido();
+			}
+			
 			Balancear(vet, temp, inic, meio - 1);
 			Balancear(vet, temp, meio + 1, fim);
 		}
