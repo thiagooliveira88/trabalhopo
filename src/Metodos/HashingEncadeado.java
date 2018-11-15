@@ -1,12 +1,9 @@
 package Metodos;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import Objetos.ListaSimples;
+import Objetos.NoListaSimples;
 import Objetos.Promissoria;
+import Utils.UsoGeral;
 
 public class HashingEncadeado {
 	private ListaSimples[] vetorH;

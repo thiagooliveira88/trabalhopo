@@ -1,8 +1,6 @@
 package Objetos;
 
-import java.util.Date;
-
-import Metodos.UsoGeral;
+import Utils.UsoGeral;
 
 public class Promissoria {
 	private String nome, cpf, valor;

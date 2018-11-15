@@ -5,12 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-import Metodos.UsoGeral;
 import Objetos.Promissoria;
 
 public class SuporteArquivo {

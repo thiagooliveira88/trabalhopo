@@ -1,13 +1,11 @@
-package Metodos;
-
-import Objetos.Promissoria;
+package Objetos;
 
 public class NodoAVL {
 	private Promissoria info;
 	private NodoAVL esq, dir, noRepetido;
 	private byte fatorBalanceamento;
 
-	NodoAVL(Promissoria promissoria) {
+	public NodoAVL(Promissoria promissoria) {
 		this.info = promissoria;
 		this.fatorBalanceamento = 0;
 		this.esq = null;

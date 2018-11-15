@@ -1,10 +1,5 @@
-package Metodos;
+package Utils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import Objetos.Promissoria;
 
 public class UsoGeral {
@@ -27,17 +22,6 @@ public class UsoGeral {
 		return -1;
 	}
 
-	public static Date obterData(String dataVenc) {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = null;
-		try {
-			date = formatter.parse(dataVenc);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return date;
-	}
-
 	public static int converterStringToInt(String data) {
 
 		String[] dado = data.split("/");
@@ -54,19 +38,6 @@ public class UsoGeral {
 
 		return retorno;
 
-	}
-
-	public static Object cloneObject(Object obj) {
-		try {
-			Object clone = obj.getClass().newInstance();
-			for (Field field : obj.getClass().getDeclaredFields()) {
-				field.setAccessible(true);
-				field.set(clone, field.get(obj));
-			}
-			return clone;
-		} catch (Exception e) {
-			return null;
-		}
 	}
 
 }

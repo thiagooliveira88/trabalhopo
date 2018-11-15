@@ -1,6 +1,4 @@
-package Metodos;
-
-import Objetos.Promissoria;
+package Objetos;
 
 public class ListaSimples {
 	private NoListaSimples prim;
@@ -62,13 +60,4 @@ public class ListaSimples {
 		this.ult = novoNo;
 		this.quantNos++;
 	}
-
-//	public NoListaSimples pesquisarNo(int chave) {
-//		NoListaSimples atual = this.prim;
-//		while ((atual != null) && (atual.getInfo().getChave() != chave)) {
-//			atual = atual.getProx();
-//		}
-//		return atual;
-//	}
-
 }

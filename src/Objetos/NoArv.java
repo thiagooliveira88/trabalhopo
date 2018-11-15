@@ -1,6 +1,4 @@
-package Metodos;
-
-import Objetos.Promissoria;
+package Objetos;
 
 public class NoArv {
 	private Promissoria info;
