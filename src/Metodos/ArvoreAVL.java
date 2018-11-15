@@ -22,21 +22,26 @@ public class ArvoreAVL {
 			return novo;
 		} else {
 
-//			if (elem.getdataVenc() == no.getInfo().getdataVenc()) {
-//
-//				// se for igual, vou caminhando até o no nulo para inserir o
-//				// elemento.
-//				NodoAVL temp = no;
-//				while (temp.getNoRepetido() != null) {
-//					temp = temp.getNoRepetido();
-//				}
-//				// se chegou até aqui, quer dizer que o NoRepetido esta nulo
-//				// insiro o elemento repetido.
-//				temp.setNoRepetido(new NodoAVL(elem));
-//				return no;
-//
-//			} else
-			if (elem.getdataVenc() < no.getInfo().getdataVenc()) {
+			// diferente da ABB, aqui eu preciso pesquisar o elemento na AVL
+			// por conta do auto balanceamento da arvore
+			NodoAVL noPesquisa = this.pesquisar(elem.getdataVenc(), this.raiz);
+			if (noPesquisa != null) {
+
+				// se for diferente de nulo, vou caminhando até o no nulo para
+				// inserir o
+				// elemento.
+				NodoAVL temp = noPesquisa;
+				while (temp.getNoRepetido() != null) {
+					temp = temp.getNoRepetido();
+				}
+				// se chegou até aqui, quer dizer que o NoRepetido esta nulo
+				// insiro o elemento repetido.
+				temp.setNoRepetido(new NodoAVL(elem));
+
+				// retorno o mesmo nó,pois nao houve alteracao
+				return no;
+
+			} else if (elem.getdataVenc() < no.getInfo().getdataVenc()) {
 				// Insere à esquerda e verifica se precisa balancear à direita
 				no.setEsq(insere(elem, no.getEsq()));
 				no = balancearDir(no);
@@ -157,20 +162,17 @@ public class ArvoreAVL {
 		String concatData = "";
 
 		if (noData != null) {
-//			while (noData != null && noData.getInfo() != null) {
-//				Promissoria info = noData.getInfo();
-//
-//				concatData += UsoGeral.converterIntToString(info.getdataVenc()) + ";" + info.getNome() + ";"
-//						+ info.getCpf() + ";" + info.getValor() + ";" + info.getPaga() + ",";
-//
-//				noData = noData.getNoRepetido();
-//			}
-			
-			Promissoria info = noData.getInfo();
-			concatData += UsoGeral.converterIntToString(info.getdataVenc()) + ";" + info.getNome() + ";"
-					+ info.getCpf() + ";" + info.getValor() + ";" + info.getPaga() + ",";
+			while (noData != null && noData.getInfo() != null) {
+				Promissoria info = noData.getInfo();
+
+				concatData += UsoGeral.converterIntToString(info.getdataVenc()) + ";" + info.getNome() + ";"
+						+ info.getCpf() + ";" + info.getValor() + ";" + info.getPaga() + ",";
+
+				noData = noData.getNoRepetido();
+			}
+
 		}
-		
+
 		return concatData;
 	}
 

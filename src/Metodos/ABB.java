@@ -43,7 +43,7 @@ public class ABB {
 			NoArv novo = new NoArv(elem);
 			return novo;
 		} else {
-
+			
 			if (elem.getdataVenc() == no.getInfo().getdataVenc()) {
 
 				// se for igual, vou caminhando até o no nulo para inserir o
@@ -57,6 +57,7 @@ public class ABB {
 				temp.setNoRepetido(new NoArv(elem));
 
 				return no;
+				
 			} else if (elem.getdataVenc() < no.getInfo().getdataVenc()) {
 				no.setEsq(inserir(elem, no.getEsq()));
 				return no;
@@ -105,16 +106,19 @@ public class ABB {
 	}
 
 	private NoArv pesquisar(int dataVenc, NoArv no) {
-		if (no != null) {
-			if (dataVenc < no.getInfo().getdataVenc()) {
-				no = pesquisar(dataVenc, no.getEsq());
+		NoArv temp = no;
+		
+		if (temp != null) {
+			if (dataVenc < temp.getInfo().getdataVenc()) {
+				temp = pesquisar(dataVenc, temp.getEsq());
 			} else {
-				if (dataVenc > no.getInfo().getdataVenc()) {
-					no = pesquisar(dataVenc, no.getDir());
+				if (dataVenc > temp.getInfo().getdataVenc()) {
+					temp = pesquisar(dataVenc, temp.getDir());
 				}
+				
 			}
 		}
-		return no;
+		return temp;
 	}
 
 	public NoArv[] CamCentral(int tamanhoVet) {
@@ -124,9 +128,7 @@ public class ABB {
 		NoArv[] vet = new NoArv[quantNos];
 
 		NoArv[] vetor = FazCamCentral(raiz, vet, n);
-
-		raiz = null;
-		quantNos = 0;
+///		raiz = null;///		quantNos = 0;
 
 		return vetor;
 	}
@@ -144,7 +146,7 @@ public class ABB {
 	}
 
 	public ABB ArvoreBalanceada(NoArv[] vetOrdenado) {
-		ABB temp = this;
+		ABB temp = new ABB();
 		Balancear(vetOrdenado, temp, 0, vetOrdenado.length - 1);
 		return temp;
 	}
@@ -155,11 +157,11 @@ public class ABB {
 			meio = (inic + fim) / 2;
 
 			NoArv aux = vet[meio];
-			while (aux!=null && aux.getInfo() != null) {
+			while (aux != null && aux.getInfo() != null) {
 				temp.inserir(aux.getInfo());
 				aux = aux.getNoRepetido();
 			}
-			
+
 			Balancear(vet, temp, inic, meio - 1);
 			Balancear(vet, temp, meio + 1, fim);
 		}

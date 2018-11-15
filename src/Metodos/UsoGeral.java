@@ -1,5 +1,7 @@
 package Metodos;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,9 +51,22 @@ public class UsoGeral {
 		String dado = String.valueOf(data);
 
 		String retorno = dado.substring(6, 8) + "/" + dado.substring(4, 6) + "/" + dado.substring(0, 4);
-		
+
 		return retorno;
 
+	}
+
+	public static Object cloneObject(Object obj) {
+		try {
+			Object clone = obj.getClass().newInstance();
+			for (Field field : obj.getClass().getDeclaredFields()) {
+				field.setAccessible(true);
+				field.set(clone, field.get(obj));
+			}
+			return clone;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 }
