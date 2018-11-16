@@ -38,30 +38,30 @@ public class Principal {
 		for (String arquivo : nomeArqs.keySet()) {
 
 			// HEAPSORT + PESQUISA BINÁRIA
-			ExecutaMetodos.executarHeapSort(nomeArqs, datas, arquivo, pathArq);
+			ExecutarMetodos.executarHeapSort(nomeArqs, datas, arquivo, pathArq);
 		}
 		for (String arquivo : nomeArqs.keySet()) {
 
 			// QUICKSORT + PESQUISA BINÁRIA
-			ExecutaMetodos.executarQuickSort(nomeArqs, datas, arquivo, pathArq);
+			ExecutarMetodos.executarQuickSort(nomeArqs, datas, arquivo, pathArq);
 		}
 		for (String arquivo : nomeArqs.keySet()) {
 
 			// ARVORE BINÁRIA DE BUSCA
-			ExecutaMetodos.executarAvoreBinaria(nomeArqs, datas, arquivo, pathArq);
+			ExecutarMetodos.executarAvoreBinaria(nomeArqs, datas, arquivo, pathArq);
 		}
 		for (String arquivo : nomeArqs.keySet()) {
 
 			// ARVORE AVL
-			ExecutaMetodos.executarAvoreAVL(nomeArqs, datas, arquivo, pathArq);
+			ExecutarMetodos.executarAvoreAVL(nomeArqs, datas, arquivo, pathArq);
 		}
 		for (String arquivo : nomeArqs.keySet()) {
 
 			// HASHING COM ENCADEAMENTO
-			ExecutaMetodos.executarHashingEncadeado(nomeArqs, datas, arquivo, pathArq);
+			ExecutarMetodos.executarHashingEncadeado(nomeArqs, datas, arquivo, pathArq);
 		}
 		
-		
+		ExecutarMetodos.gravarTempos(pathArq);
 	}
 
 }

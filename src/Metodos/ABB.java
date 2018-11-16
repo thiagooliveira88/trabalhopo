@@ -78,33 +78,15 @@ public class ABB {
 		}
 	}
 
-	private NoArv pesquisarData(int dataVenc) {
+	public Object pesquisarData(int dataVenc) {
 
 		NoArv noPesquisa = pesquisar(dataVenc, raiz);
 
 		if (noPesquisa != null)
 			return noPesquisa;
 
-		return null;
+		return UsoGeral.converterIntToString(dataVenc);
 
-	}
-
-	public String obterPesquisaString(int data) {
-
-		NoArv noData = pesquisarData(data);
-		String concatData = "";
-
-		if (noData != null) {
-			while (noData != null && noData.getInfo() != null) {
-				Promissoria info = noData.getInfo();
-
-				concatData += UsoGeral.converterIntToString(info.getdataVenc()) + ";" + info.getNome() + ";"
-						+ info.getCpf() + ";" + info.getValor() + ";" + info.getPaga() + ",";
-
-				noData = noData.getNoRepetido();
-			}
-		}
-		return concatData;
 	}
 
 	private NoArv pesquisar(int dataVenc, NoArv no) {

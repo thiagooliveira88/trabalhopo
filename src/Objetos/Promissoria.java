@@ -3,7 +3,8 @@ package Objetos;
 import Utils.UsoGeral;
 
 public class Promissoria {
-	private String nome, cpf, valor;
+	private String nome, cpf;
+	private Double valor;
 	private int dataVenc;
 	private boolean paga;
 
@@ -15,7 +16,7 @@ public class Promissoria {
 		this.dataVenc = UsoGeral.converterStringToInt(dataVenc);
 		this.nome = nome;
 		this.cpf = cpf;
-		this.valor = valor;
+		this.valor = Double.parseDouble(valor);
 		this.paga = Boolean.parseBoolean(paga);
 	}
 
@@ -39,11 +40,11 @@ public class Promissoria {
 		this.dataVenc = dataVenc;
 	}
 
-	public String getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
-	public void setValor(String valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 

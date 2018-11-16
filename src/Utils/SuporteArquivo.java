@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-
 import Objetos.Promissoria;
 
 public class SuporteArquivo {
@@ -134,21 +133,21 @@ public class SuporteArquivo {
 					// percorro o intervalo de datas iguais encontradas da+
 					// esquerda para direita.
 					// que não são pagas
-					gravarArquivo.println("NÃO PAGAS:");
+					gravarArquivo.println("NAO PAGAS:");
 					for (int j = esq; j <= dir; j++) {
 						if (!vetPromissoria[j].getPaga()) {
 							gravarArquivo.println(UsoGeral.converterIntToString(vetPromissoria[j].getdataVenc()) + ";"
 									+ (vetPromissoria[j].getValor()) + ";" + vetPromissoria[j].getNome());
 
-							totalNaoPago += Double.parseDouble(vetPromissoria[j].getValor());
+							totalNaoPago += vetPromissoria[j].getValor();
 						}
 					}
-					gravarArquivo.println("TOTAL NÃO PAGA: " + totalNaoPago);
+					gravarArquivo.println("TOTAL NAO PAGO: " + totalNaoPago);
 					gravarArquivo.println("========================================================================");
 				}
 			}
 			// grava as datas não encontradas
-			gravarArquivo.println("NÃO HÁ PROMISSÓRIAS NAS DATAS MENCIONADAS:" + "\n" + datasNaoEncontradas);
+			gravarArquivo.println("NAO HA PROMISSORIAS NAS DATAS MENCIONADAS:" + "\n" + datasNaoEncontradas);
 			gravarArquivo.close();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
@@ -156,69 +155,77 @@ public class SuporteArquivo {
 
 	}
 
-	public static void escreverResultadoPesquisa(String datasEncontradas, String datasNaoEncontradas,
-			String caminhoResultado) {
+	public static void escreverResultadoPesquisa(Object[] resultadoPesquisa, String caminhoResultado) {
 		try {
 			FileWriter arquivo = new FileWriter(caminhoResultado);
 			PrintWriter gravarArquivo = new PrintWriter(arquivo);
 
-			String[] promissoria = datasEncontradas.split(",");
 			Double totalNaoPago = 0D;
-
-			String pagas = "";
-			String naoPagas = "";
-			String verificaData = null;
+			String datasNaoEncontradas = "";
 			// percorro todo o vetor
-			for (int j = 0; j < promissoria.length; j++) {
+			for (int i = 0; i < resultadoPesquisa.length; i++) {
 
-				String[] dados = promissoria[j].split(";");
-				/*
-				 * data = dados[0] nome = dados[1] cpf = dados[2] valor=
-				 * dados[3] paga = dados[4]
-				 */
-
-				if (verificaData != null && verificaData.equals(dados[0])) {
-
-					if (Boolean.parseBoolean(dados[4])) {
-						pagas += dados[0] + ";" + dados[3] + ";" + dados[1] + "\n";
-					}
-
-					if (!Boolean.parseBoolean(dados[4])) {
-
-						naoPagas += dados[0] + ";" + dados[3] + ";" + dados[1] + "\n";
-						totalNaoPago += Double.parseDouble(dados[3]);
-					}
-				} else {
-					if (pagas != "" || naoPagas != "") {
-						gravarArquivo.println("PAGAS:");
-						gravarArquivo.println(pagas);
-						gravarArquivo.println("NÃO PAGAS:");
-						gravarArquivo.println(naoPagas);
-						gravarArquivo.println("TOTAL NÃO PAGA: " + totalNaoPago);
-						gravarArquivo
-								.println("========================================================================");
-
-						pagas = "";
-						naoPagas = "";
-						totalNaoPago = 0D;
-					}
-					if (Boolean.parseBoolean(dados[4])) {
-						pagas += dados[0] + ";" + dados[3] + ";" + dados[1] + "\n";
-					}
-
-					if (!Boolean.parseBoolean(dados[4])) {
-
-						naoPagas += dados[0] + ";" + dados[3] + ";" + dados[1] + "\n";
-						totalNaoPago += Double.parseDouble(dados[3]);
-					}
-
+				int esq = i;
+				int dir = i;
+				while (dir >= 0 && dir < resultadoPesquisa.length - 1 && ((Promissoria) resultadoPesquisa[dir])
+						.getdataVenc() == ((Promissoria) resultadoPesquisa[dir + 1]).getdataVenc()) {
+					dir++;
 				}
+				Promissoria promissoria = ((Promissoria) resultadoPesquisa[i]);
+				if (promissoria.getNome() == null) {
+					// concatena as datas não encontradas
+					datasNaoEncontradas += UsoGeral.converterIntToString(promissoria.getdataVenc()) + "\n";
+				} else {
+					// percorro o intervalo de datas iguais encontradas da
+					// esquerda para direita.
+					// que são pagas
+					totalNaoPago = 0D;
+					gravarArquivo.println("PAGAS:");
+					for (int j = esq; j <= dir; j++) {
 
-				verificaData = dados[0];
+						Promissoria info = ((Promissoria) resultadoPesquisa[j]);
 
+						if (info.getPaga()) {
+							gravarArquivo.println(UsoGeral.converterIntToString(info.getdataVenc()) + ";"
+									+ (info.getValor()) + ";" + info.getNome());
+						}
+					}
+					// percorro o intervalo de datas iguais encontradas da+
+					// esquerda para direita.
+					// que não são pagas
+					gravarArquivo.println("NAO PAGAS:");
+					for (int j = esq; j <= dir; j++) {
+						Promissoria info = ((Promissoria) resultadoPesquisa[j]);
+						if (!info.getPaga()) {
+							gravarArquivo.println(UsoGeral.converterIntToString(info.getdataVenc()) + ";"
+									+ (info.getValor()) + ";" + info.getNome());
+
+							totalNaoPago += info.getValor();
+						}
+					}
+					gravarArquivo.println("TOTAL NAO PAGO: " + totalNaoPago);
+					gravarArquivo.println("========================================================================");
+				}
 			}
 			// grava as datas não encontradas
-			gravarArquivo.println("NÃO HÁ PROMISSÓRIAS NAS DATAS MENCIONADAS:" + "\n" + datasNaoEncontradas);
+			gravarArquivo.println("NAO HA PROMISSORIAS NAS DATAS MENCIONADAS:" + "\n" + datasNaoEncontradas);
+			gravarArquivo.close();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	public static void escreverTempos(String[] tempos, String caminhoResultado) {
+		try {
+			FileWriter arquivo = new FileWriter(caminhoResultado);
+			PrintWriter gravarArquivo = new PrintWriter(arquivo);
+
+			for (int i = 0; i < tempos.length; i++) {
+
+				gravarArquivo.println(tempos[i]);
+			}
+
 			gravarArquivo.close();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());

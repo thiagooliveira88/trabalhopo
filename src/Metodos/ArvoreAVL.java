@@ -147,6 +147,19 @@ public class ArvoreAVL {
 		return no;
 	}
 
+	private NodoAVL pesquisar(int dataVenc, NodoAVL no) {
+		if (no != null) {
+			if (dataVenc < no.getInfo().getdataVenc()) {
+				no = pesquisar(dataVenc, no.getEsq());
+			} else {
+				if (dataVenc > no.getInfo().getdataVenc()) {
+					no = pesquisar(dataVenc, no.getDir());
+				}
+			}
+		}
+		return no;
+	}
+
 	private NodoAVL pesquisarData(int dataVenc) {
 
 		NodoAVL noPesquisa = pesquisar(dataVenc, raiz);
@@ -156,6 +169,16 @@ public class ArvoreAVL {
 
 		return null;
 
+	}
+	
+	public Object pesquisar(int data) {
+
+		NodoAVL noData = pesquisarData(data);
+
+		if (noData != null)
+			return noData;
+		
+		return UsoGeral.converterIntToString(data);
 	}
 
 	public String obterPesquisaString(int data) {
@@ -176,24 +199,6 @@ public class ArvoreAVL {
 		}
 
 		return concatData;
-	}
-
-	private NodoAVL pesquisar(int dataVenc, NodoAVL no) {
-		if (no != null) {
-			if (dataVenc < no.getInfo().getdataVenc()) {
-				no = pesquisar(dataVenc, no.getEsq());
-			} else {
-				if (dataVenc > no.getInfo().getdataVenc()) {
-					no = pesquisar(dataVenc, no.getDir());
-				}
-			}
-		}
-		return no;
-	}
-
-	public void reiniciarAVL() {
-		raiz = null;
-		h = true;
 	}
 
 }

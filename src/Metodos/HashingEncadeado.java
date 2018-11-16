@@ -15,10 +15,6 @@ public class HashingEncadeado {
 		// inicializa o vetor com o tamanho acrescido.
 		this.setVetorH(new ListaSimples[tam]);
 		this.setTamanho(tam);
-		// para cada posição do vetor, inicializa uma lista encadeada.
-		for (int i = 0; i < this.getTamanho(); i++) {
-			this.getVetorH()[i] = new ListaSimples();
-		}
 	}
 
 	public ListaSimples[] getVetorH() {
@@ -55,7 +51,14 @@ public class HashingEncadeado {
 
 			int pos = 0;
 			pos = obterPosicaoHash(promi.getdataVenc());
-			this.getVetorH()[pos].inserirUltimo(promi);
+
+			if (this.getVetorH()[pos] == null) {
+				this.getVetorH()[pos] = new ListaSimples();
+				this.getVetorH()[pos].inserirUltimo(promi);
+			} else {
+				this.getVetorH()[pos].inserirUltimo(promi);
+			}
+
 		}
 
 	}
@@ -89,23 +92,14 @@ public class HashingEncadeado {
 		return tamanhoVet;
 	}
 
-	public String pesquisar(int data) {
+	public Object pesquisar(int data) {
 
 		NoListaSimples noData = pesquisaHash(data);
-		
-		String concatData = "";
 
-		if (noData != null) {
-			while (noData != null && noData.getInfo() != null) {
-				Promissoria info = noData.getInfo();
+		if (noData != null)
+			return noData;
 
-				concatData += UsoGeral.converterIntToString(info.getdataVenc()) + ";" + info.getNome() + ";"
-						+ info.getCpf() + ";" + info.getValor() + ";" + info.getPaga() + ",";
-
-				noData = noData.getNoDataRepetida();
-			}
-		}
-		return concatData;
+		return UsoGeral.converterIntToString(data);
 	}
 
 	private NoListaSimples pesquisaHash(int data) {
@@ -113,7 +107,7 @@ public class HashingEncadeado {
 		int pos = 0;
 		pos = obterPosicaoHash(data);
 		if (pos >= 0 && pos < this.tamanho) {
-			if (this.vetorH[pos].getPrim() != null) {
+			if (this.vetorH[pos] != null && this.vetorH[pos].getPrim() != null) {
 				aux = this.vetorH[pos].getPrim();
 				while (aux != null) {
 
