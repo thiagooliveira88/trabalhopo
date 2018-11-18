@@ -223,6 +223,17 @@ public class SuporteArquivo {
 
 			for (int i = 0; i < tempos.length; i++) {
 
+				if (i == 0)
+					gravarArquivo.println("=============METODO HEAP SORT======================================");
+				else if (i == 15)
+					gravarArquivo.println("=============METODO QUICK SORT=====================================");
+				else if (i == 30)
+					gravarArquivo.println("=============METODO ARVORE BINARIA=================================");
+				else if (i == 45)
+					gravarArquivo.println("=============METODO ARVORE AVL=====================================");
+				else if (i == 60)
+					gravarArquivo.println("=============METODO HASHING ENCADEADO==============================");
+
 				gravarArquivo.println(tempos[i]);
 			}
 
