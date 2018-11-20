@@ -170,6 +170,11 @@ public class SuporteArquivo {
 				while (dir >= 0 && dir < resultadoPesquisa.length - 1 && ((Promissoria) resultadoPesquisa[dir])
 						.getdataVenc() == ((Promissoria) resultadoPesquisa[dir + 1]).getdataVenc()) {
 					dir++;
+					i++;
+				}
+
+				if (dir > i) {
+					i--;
 				}
 				Promissoria promissoria = ((Promissoria) resultadoPesquisa[i]);
 				if (promissoria.getNome() == null) {
@@ -206,6 +211,7 @@ public class SuporteArquivo {
 					gravarArquivo.println("TOTAL NAO PAGO: " + totalNaoPago);
 					gravarArquivo.println("========================================================================");
 				}
+
 			}
 			// grava as datas não encontradas
 			gravarArquivo.println("NAO HA PROMISSORIAS NAS DATAS MENCIONADAS:" + "\n" + datasNaoEncontradas);
