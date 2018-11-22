@@ -1,6 +1,5 @@
 package Programa;
 
-import java.util.LinkedHashMap;
 import Utils.SuporteArquivo;
 
 public class Principal {
@@ -9,58 +8,85 @@ public class Principal {
 
 	public static void main(String[] args) {
 
-		// crio um LinkedHashMap com o nome do arquivo a ser lido e com o
-		// tamanho do vetor.
-		LinkedHashMap<String, Integer> nomeArqs = new LinkedHashMap<String, Integer>();
-		nomeArqs.put("promissoria500alea", 500);
-		nomeArqs.put("promissoria500inv", 500);
-		nomeArqs.put("promissoria500ord", 500);
-		nomeArqs.put("promissoria1000alea", 1000);
-		nomeArqs.put("promissoria1000inv", 1000);
-		nomeArqs.put("promissoria1000ord", 1000);
-		nomeArqs.put("promissoria5000alea", 5000);
-		nomeArqs.put("promissoria5000inv", 5000);
-		nomeArqs.put("promissoria5000ord", 5000);
-		nomeArqs.put("promissoria10000alea", 10000);
-		nomeArqs.put("promissoria10000inv", 10000);
-		nomeArqs.put("promissoria10000ord", 10000);
-		nomeArqs.put("promissoria30000alea", 30000);
-		nomeArqs.put("promissoria30000inv", 30000);
-		nomeArqs.put("promissoria30000ord", 30000);
+		// cria uma matriz pra armazenar os nomes e os tamanhos dos arquivos
+		String[][] nomeArquivos = new String[15][2];
+		nomeArquivos[0][0] = "promissoria500alea";
+		nomeArquivos[0][1] = "500";
+		nomeArquivos[1][0] = "promissoria500inv";
+		nomeArquivos[1][1] = "500";
+		nomeArquivos[2][0] = "promissoria500ord";
+		nomeArquivos[2][1] = "500";
+		nomeArquivos[3][0] = "promissoria1000alea";
+		nomeArquivos[3][1] = "1000";
+		nomeArquivos[4][0] = "promissoria1000inv";
+		nomeArquivos[4][1] = "1000";
+		nomeArquivos[5][0] = "promissoria1000ord";
+		nomeArquivos[5][1] = "1000";
+		nomeArquivos[6][0] = "promissoria5000alea";
+		nomeArquivos[6][1] = "5000";
+		nomeArquivos[7][0] = "promissoria5000inv";
+		nomeArquivos[7][1] = "5000";
+		nomeArquivos[8][0] = "promissoria5000ord";
+		nomeArquivos[8][1] = "5000";
+		nomeArquivos[9][0] = "promissoria10000alea";
+		nomeArquivos[9][1] = "10000";
+		nomeArquivos[10][0] = "promissoria10000inv";
+		nomeArquivos[10][1] = "10000";
+		nomeArquivos[11][0] = "promissoria10000ord";
+		nomeArquivos[11][1] = "10000";
+		nomeArquivos[12][0] = "promissoria30000alea";
+		nomeArquivos[12][1] = "30000";
+		nomeArquivos[13][0] = "promissoria30000inv";
+		nomeArquivos[13][1] = "30000";
+		nomeArquivos[14][0] = "promissoria30000ord";
+		nomeArquivos[14][1] = "30000";
 
 		// pego as datas para a memória, pois será usado até o fim do programa
 		int[] datas = SuporteArquivo.obterDatasParaPesquisa(pathArq + "data.txt", 400);
-		/*
-		 * percorro todo o LinkedHashMap(Dictonary) o método Keyset retorna as chaves de
-		 * pesquisa, que no caso são os nomes dos arquivos, assim consigo pegar o nome
-		 * do arquivo e o tamanho do vetor.
-		 */
-		for (String arquivo : nomeArqs.keySet()) {
+	
+		String nomeArquivo = "";
+		int tamanhoArq = 0;
+		for (int i = 0; i < nomeArquivos.length; i++) {
 
 			// HEAPSORT + PESQUISA BINÁRIA
-			ExecutarMetodos.executarHeapSort(nomeArqs, datas, arquivo, pathArq);
+			nomeArquivo = nomeArquivos[i][0];
+			tamanhoArq = Integer.parseInt(nomeArquivos[i][1]);
+			ExecutarMetodos.executarHeapSort(nomeArquivo, tamanhoArq, datas, pathArq);
+
 		}
-		for (String arquivo : nomeArqs.keySet()) {
+
+		for (int i = 0; i < nomeArquivos.length; i++) {
 
 			// QUICKSORT + PESQUISA BINÁRIA
-			ExecutarMetodos.executarQuickSort(nomeArqs, datas, arquivo, pathArq);
+			nomeArquivo = nomeArquivos[i][0];
+			tamanhoArq = Integer.parseInt(nomeArquivos[i][1]);
+			ExecutarMetodos.executarQuickSort(nomeArquivo, tamanhoArq, datas, pathArq);
 		}
-		for (String arquivo : nomeArqs.keySet()) {
+
+		for (int i = 0; i < nomeArquivos.length; i++) {
 
 			// ARVORE BINÁRIA DE BUSCA
-			ExecutarMetodos.executarAvoreBinaria(nomeArqs, datas, arquivo, pathArq);
+			nomeArquivo = nomeArquivos[i][0];
+			tamanhoArq = Integer.parseInt(nomeArquivos[i][1]);
+			ExecutarMetodos.executarAvoreBinaria(nomeArquivo, tamanhoArq, datas, pathArq);
 		}
-		for (String arquivo : nomeArqs.keySet()) {
+
+		for (int i = 0; i < nomeArquivos.length; i++) {
 
 			// ARVORE AVL
-			ExecutarMetodos.executarAvoreAVL(nomeArqs, datas, arquivo, pathArq);
+			nomeArquivo = nomeArquivos[i][0];
+			tamanhoArq = Integer.parseInt(nomeArquivos[i][1]);
+			ExecutarMetodos.executarAvoreAVL(nomeArquivo, tamanhoArq, datas, pathArq);
 		}
-		for (String arquivo : nomeArqs.keySet()) {
+
+		for (int i = 0; i < nomeArquivos.length; i++) {
 
 			// HASHING COM ENCADEAMENTO
-			ExecutarMetodos.executarHashingEncadeado(nomeArqs, datas, arquivo, pathArq);
+			nomeArquivo = nomeArquivos[i][0];
+			tamanhoArq = Integer.parseInt(nomeArquivos[i][1]);
+			ExecutarMetodos.executarHashingEncadeado(nomeArquivo, tamanhoArq, datas, pathArq);
 		}
-		
+
 		ExecutarMetodos.gravarTempos(pathArq);
 	}
 

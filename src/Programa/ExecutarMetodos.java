@@ -1,6 +1,5 @@
 package Programa;
 
-import java.util.LinkedHashMap;
 import Metodos.ABB;
 import Metodos.ArvoreAVL;
 import Metodos.HashingEncadeado;
@@ -18,8 +17,7 @@ public class ExecutarMetodos {
 	private static String[] tempos = new String[75];
 	private static int indiceTempos = 0;
 
-	public static void executarHeapSort(LinkedHashMap<String, Integer> nomeArqs, int[] datas, String arquivo,
-			String pathArq) {
+	public static void executarHeapSort(String arquivo, int tamanhoArq, int[] datas, String pathArq) {
 		Promissoria[] vetPromissoria;
 		long inicioExec;
 		long fimExec;
@@ -30,7 +28,7 @@ public class ExecutarMetodos {
 
 			// leio o arquivo e atribuo o resultado para o vetor de
 			// promissoria
-			vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
+			vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", tamanhoArq);
 			// executo o método HeapSort
 			Heapsort.executarHeapSort(vetPromissoria);
 			// defino o caminho e nome do arquivo que será salvo em disco.
@@ -55,8 +53,7 @@ public class ExecutarMetodos {
 		System.out.println("HeapSort " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
 	}
 
-	public static void executarQuickSort(LinkedHashMap<String, Integer> nomeArqs, int[] datas, String arquivo,
-			String pathArq) {
+	public static void executarQuickSort(String arquivo, int tamanhoArq, int[] datas, String pathArq) {
 		Promissoria[] vetPromissoria;
 		long inicioExec;
 		long fimExec;
@@ -66,7 +63,7 @@ public class ExecutarMetodos {
 
 			// leio o arquivo e atribuo o resultado para o vetor de
 			// promissoria
-			vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
+			vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", tamanhoArq);
 			// executo o método QuickSort
 			QuickSort.executarQuickSort(vetPromissoria);
 			// defino o caminho e nome do arquivo que será salvo em disco.
@@ -90,15 +87,14 @@ public class ExecutarMetodos {
 		System.out.println("Quicksort " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
 	}
 
-	public static void executarAvoreBinaria(LinkedHashMap<String, Integer> nomeArqs, int[] datas, String arquivo,
-			String pathArq) {
+	public static void executarAvoreBinaria(String arquivo, int tamanhoArq, int[] datas, String pathArq) {
 		Promissoria[] vetPromissoria;
 		long inicioExec;
 		long fimExec;
 		inicioExec = System.currentTimeMillis();
 		// ArvoreBinaria
 		// leio o arquivo e atribuo o resultado para o vetor de promissoria
-		vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
+		vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", tamanhoArq);
 		ABB arvoreBinaria = null;
 		for (int i = 0; i < 5; i++) {
 			arvoreBinaria = new ABB();
@@ -108,7 +104,7 @@ public class ExecutarMetodos {
 			}
 
 			// ordeno a ArvoreBinaria
-			NoArv[] vetOrdenado = arvoreBinaria.CamCentral(nomeArqs.get(arquivo));
+			NoArv[] vetOrdenado = arvoreBinaria.CamCentral(tamanhoArq);
 
 			// balancear a ArvoreBinaria
 			arvoreBinaria.ArvoreBalanceada(vetOrdenado);
@@ -145,15 +141,13 @@ public class ExecutarMetodos {
 		System.out.println("ArvoreBinaria " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
 	}
 
-	public static void executarAvoreAVL(LinkedHashMap<String, Integer> nomeArqs, int[] datas, String arquivo,
-			String pathArq) {
+	public static void executarAvoreAVL(String arquivo, int tamanhoArq, int[] datas, String pathArq) {
 		Promissoria[] vetPromissoria;
 		long inicioExec;
 		long fimExec;
 		inicioExec = System.currentTimeMillis();
-//			// ARVORE AVL
-		int tamanhoVet = nomeArqs.get(arquivo);
-		vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", tamanhoVet);
+		// ARVORE AVL
+		vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", tamanhoArq);
 
 		for (int i = 0; i < 5; i++) {
 
@@ -194,8 +188,7 @@ public class ExecutarMetodos {
 		System.out.println("ArvoreAVL " + arquivo + " = " + ((fimExec - inicioExec) / 5) + " milissegundos");
 	}
 
-	public static void executarHashingEncadeado(LinkedHashMap<String, Integer> nomeArqs, int[] datas, String arquivo,
-			String pathArq) {
+	public static void executarHashingEncadeado(String arquivo, int tamanhoArq, int[] datas, String pathArq) {
 		Promissoria[] vetPromissoria;
 		long inicioExec;
 		long fimExec;
@@ -204,10 +197,10 @@ public class ExecutarMetodos {
 		HashingEncadeado hashingEncad = null;
 
 		// leio o arquivo e atribuo o resultado para o vetor de promissoria
-		vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", nomeArqs.get(arquivo));
+		vetPromissoria = SuporteArquivo.leArquivo(pathArq + arquivo + ".txt", tamanhoArq);
 
 		for (int i = 0; i < 5; i++) {
-			hashingEncad = new HashingEncadeado(nomeArqs.get(arquivo));
+			hashingEncad = new HashingEncadeado(tamanhoArq);
 
 			// insiro os registros
 			for (int j = 0; j < vetPromissoria.length; j++) {
@@ -215,7 +208,7 @@ public class ExecutarMetodos {
 			}
 
 			String caminhoResultado = pathArq + "ArquivosGerados\\HashingResultadoPesquisa" + arquivo + ".txt";
-			
+
 			Object[] resultadoPesquisa = new Object[datas.length];
 			for (int j = 0; j < datas.length; j++) {
 

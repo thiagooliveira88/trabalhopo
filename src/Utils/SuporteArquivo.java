@@ -117,7 +117,7 @@ public class SuporteArquivo {
 				}
 				if (vetIndices[i] == -1) {
 					// concatena as datas não encontradas
-					datasNaoEncontradas += UsoGeral.converterIntToString(datas[i]) + "\n";
+					datasNaoEncontradas += UsoGeral.converterIntToString(datas[i]) + " - " + "\n";
 				} else {
 					// percorro o intervalo de datas iguais encontradas da
 					// esquerda para direita.
@@ -179,7 +179,7 @@ public class SuporteArquivo {
 				Promissoria promissoria = ((Promissoria) resultadoPesquisa[i]);
 				if (promissoria.getNome() == null) {
 					// concatena as datas não encontradas
-					datasNaoEncontradas += UsoGeral.converterIntToString(promissoria.getdataVenc()) + "\n";
+					datasNaoEncontradas += UsoGeral.converterIntToString(promissoria.getdataVenc()) + " - " + "\n";
 				} else {
 					// percorro o intervalo de datas iguais encontradas da
 					// esquerda para direita.
