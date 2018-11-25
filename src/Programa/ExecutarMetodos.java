@@ -107,7 +107,7 @@ public class ExecutarMetodos {
 			NoArv[] vetOrdenado = arvoreBinaria.CamCentral(tamanhoArq);
 
 			// balancear a ArvoreBinaria
-			arvoreBinaria.ArvoreBalanceada(vetOrdenado);
+			arvoreBinaria = arvoreBinaria.ArvoreBalanceada(vetOrdenado);
 
 			String caminhoResultado = pathArq + "ArquivosGerados\\ArvoreBinariaResultadoPesquisa" + arquivo + ".txt";
 
